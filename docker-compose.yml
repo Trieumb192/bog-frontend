@@ -1,0 +1,8 @@
+  frontend:
+    build:
+      context: ./blog-frontend
+    container_name: blog-frontend
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
