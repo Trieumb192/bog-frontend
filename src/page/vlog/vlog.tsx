@@ -5,9 +5,9 @@ const VlogPlaylist = () => {
     <section className="flex flex-col lg:flex-row items-center justify-center bg-pink-50 px-10 py-16">
       <div className="relative w-full lg:w-1/2 mb-8 lg:mb-0">
         <img
-          src="https://static.wixstatic.com/media/84770f_43aa6b7db561465e97b74859a51f5dc7~mv2_d_5472_3648_s_4_2.jpg"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEAj3TgZ1vIGqNfkYWHtRZj-4E2R1ksbX_0A&s"
           alt="Video thumbnail"
-          className="w-full h-auto object-cover"
+          className="w-<50> h-auto object-cover"
         />
         <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-full shadow-md hover:scale-110 transition">
           <FaPlay className="text-gray-900 text-xl" />
