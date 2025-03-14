@@ -1,7 +1,6 @@
-import axios from 'axios';
-import { Post } from '@/types/Post';
-import { BASE_URL_POST } from '@/constants/baseUrl';
-
+import { BASE_URL_POST } from "../constants/baseUrl";
+import { Post } from "../types/Post";
+import axios from "./axiosInstance";
 
 export const getPosts = async (): Promise<Post[]> => {
   const res = await axios.get<Post[]>(BASE_URL_POST);
