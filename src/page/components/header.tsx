@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -11,15 +12,21 @@ const Header: React.FC = () => {
       <div className="flex items-center space-x-6">
         {/* Menu */}
         <nav className="flex space-x-4 text-sm italic text-gray-800">
-          <a href="#" className="hover:underline">
+          <Link
+            to="/"
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
             Home
-          </a>
+          </Link>
           <a href="#" className="hover:underline">
             Vlog
           </a>
-          <a href="#" className="hover:underline">
+          <Link
+            to="/about"
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
             About
-          </a>
+          </Link>
         </nav>
         {/* Social Icons */}
         <div className="flex space-x-3 text-gray-900 text-lg">

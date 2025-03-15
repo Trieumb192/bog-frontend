@@ -1,21 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './page/components/header';
-import Footer from './page/components/footer';
-import AboutSection from './page/about/about';
-import HeroSection from './page/hero/hero';
-import VlogPlaylist from './page/vlog/vlog';
+import Home from './page/home';
+import About from './page/about/about';
 
 const App: React.FC = () => {
   return (
-    <div className="font-sans bg-pink-50 text-gray-800">
-      <Header />
-      <HeroSection />
-      <VlogPlaylist />
-      <AboutSection />
-      {/* <PostForm onSuccess={handleReload} />
-      <PostList reload={reload} /> */}
-      <Footer />
-    </div>
+    <Router>
+      <Header/>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </main>
+    </Router>
   );
 };
 
