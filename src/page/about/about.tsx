@@ -1,6 +1,6 @@
 import React from 'react';
 
-const About = () => {
+const About: React.FC = () => {
   return (
     <div className="font-sans text-gray-800">
       {/* Hero Section */}
