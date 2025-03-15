@@ -6,7 +6,7 @@ const Header: React.FC = () => {
   return (
     <header className="relative flex justify-between items-center px-10 py-6 bg-white w-11/12">
       {/* Left - Name */}
-      <div className="text-sm font-bold tracking-widest text-gray-900">@NGUYỄN VĂN TRIỆU</div>
+      <div className="text-sm font-bold tracking-widest text-gray-900">@VAN TRIEU NGUYEN</div>
 
       {/* Right - Nav & Icons */}
       <div className="flex items-center space-x-6">

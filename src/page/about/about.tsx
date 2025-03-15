@@ -4,55 +4,84 @@ import Header from '../components/header';
 
 const About: React.FC = () => {
   return (
-    <div className="font-sans bg-pink-50 text-gray-800">
-      <Header/>
+    <div className="font-sans bg-white text-gray-800">
+      {/* Header */}
+      <Header />
+
       {/* Hero Section */}
-      <section className="relative h-[80vh] bg-cover bg-center" style={{ backgroundImage: "url('https://static.wixstatic.com/media/11062b_d1e3d3e8ee574cb9a6fce3d751fd382b~mv2.jpg')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <h1 className="text-white text-5xl font-bold">About Me</h1>
+      <section className="relative min-h-[60vh] bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
+        <div className="text-center px-4">
+          <p className="text-gray-700 text-sm md:text-base uppercase tracking-widest mb-2 font-opensans">
+            Welcome to My World
+          </p>
+          <h1 className="text-gray-900 text-4xl md:text-5xl font-playfair font-bold mb-6 tracking-wide leading-tight">
+            About Me
+          </h1>
+          <p className="text-gray-700 text-base md:text-lg font-opensans max-w-2xl mx-auto">
+            Explore my journey as a passionate Backend Developer crafting scalable systems and digital solutions.
+          </p>
+          <div className="mt-8">
+            <a
+              href="/vlog"
+              className="inline-block px-10 py-4 bg-gray-900 text-white text-lg font-opensans rounded-full hover:bg-gray-700 transition duration-300"
+            >
+              Contact Me
+            </a>
+          </div>
         </div>
       </section>
 
       {/* Intro Section */}
-      <section className="max-w-5xl mx-auto py-16 px-4 text-center">
-        <h2 className="text-3xl font-semibold mb-6">Hi, I'm Jane Doe</h2>
-        <p className="text-lg leading-relaxed text-gray-600">
-          I'm a lifestyle vlogger passionate about capturing moments and sharing stories.
-          Follow my journey as I explore new places, try exciting things, and document every step along the way!
+      <section className="max-w-5xl mx-auto py-20 px-4 text-center">
+        <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6 text-gray-900">
+          Hi, I'm Trieu Nguyen
+        </h2>
+        <p className="text-lg md:text-xl text-gray-600 font-opensans mb-4">
+          Java Backend Developer passionate about crafting scalable, high-performance systems.
+        </p>
+        <p className="text-lg md:text-xl text-gray-600 font-opensans">
+          Focused on building secure, maintainable solutions that drive business success and digital
+          transformation.
         </p>
       </section>
 
       {/* Image + Text Section */}
-      <section className="bg-gray-100 py-16">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center px-4 md:px-0 gap-10">
+      <section className="bg-gray-50 py-20">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 px-6">
           <img
-            src="https://static.wixstatic.com/media/11062b_7f345a77b5a84204ab5c2b2aa785d8e3~mv2.jpg"
-            alt="Vlogger"
-            className="w-full md:w-1/2 rounded-xl shadow-lg"
+            src="https://thuthuatnhanh.com/wp-content/uploads/2021/06/hinh-anh-bat-tay-trong-kinh-doanh.jpg"
+            alt="Coding Journey"
+            className="w-full md:w-1/2 rounded-lg shadow-xl hover:scale-105 transition-transform duration-500"
           />
           <div className="md:w-1/2 text-center md:text-left">
-            <h3 className="text-2xl font-semibold mb-4">My Journey</h3>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              Starting from humble beginnings, I've built a platform that allows me to connect with amazing people worldwide.
+            <h3 className="text-3xl font-playfair font-semibold mb-6 text-gray-900">My Journey</h3>
+            <p className="text-gray-600 text-lg font-opensans mb-4 leading-relaxed">
+              I may have started my coding journey later than others, but I've been sprinting ever
+              since.
             </p>
-            <p className="text-gray-600 leading-relaxed">
-              Whether I'm vlogging about daily life or sharing travel adventures, authenticity is at the core of everything I do.
+            <p className="text-gray-600 text-lg font-opensans leading-relaxed">
+              Through continuous learning and dedication, I aim to become an exceptional Backend
+              Developer, building reliable and efficient systems that create real-world impact.
             </p>
           </div>
         </div>
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 text-center">
-        <h3 className="text-3xl font-semibold mb-6">Follow me on Instagram!</h3>
+      <section className="py-20 text-center bg-white">
+        <h3 className="text-3xl md:text-4xl font-playfair font-semibold mb-8 text-gray-900">
+          Follow me on my Vlog!
+        </h3>
         <a
-          href="#"
-          className="inline-block px-8 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition"
+          href="/vlog"
+          className="inline-block px-10 py-4 bg-gray-900 text-white text-lg font-opensans rounded-full hover:bg-gray-700 transition duration-300"
         >
           @myvlog
         </a>
       </section>
-      <Footer/>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
