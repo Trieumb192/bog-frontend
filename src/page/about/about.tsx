@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../components/footer';
 
 const About: React.FC = () => {
   return (
@@ -49,6 +50,7 @@ const About: React.FC = () => {
           @myvlog
         </a>
       </section>
+      <Footer/>
     </div>
   );
 };
