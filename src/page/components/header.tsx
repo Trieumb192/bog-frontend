@@ -19,13 +19,13 @@ const Header: React.FC = () => {
             Home
           </Link>
           <Link
-            to="/about"
+            to="/vlog"
             className="hover:underline"
           >
             Vlog
           </Link>
           <Link
-            to="/vlog"
+            to="/about"
             className="hover:underline"
           >
             About

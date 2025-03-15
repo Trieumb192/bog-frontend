@@ -4,7 +4,7 @@ import Header from '../components/header';
 
 const About: React.FC = () => {
   return (
-    <div className="font-sans text-gray-800">
+    <div className="font-sans bg-pink-50 text-gray-800">
       <Header/>
       {/* Hero Section */}
       <section className="relative h-[80vh] bg-cover bg-center" style={{ backgroundImage: "url('https://static.wixstatic.com/media/11062b_d1e3d3e8ee574cb9a6fce3d751fd382b~mv2.jpg')" }}>

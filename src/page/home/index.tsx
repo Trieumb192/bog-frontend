@@ -1,5 +1,5 @@
 import Header from '../components/header';
-import HeroSection from '../hero/hero';
+import HeroSection from '../components/hero';
 import VlogPlaylist from '../vlog/vlog';
 import Footer from '../components/footer';
 
