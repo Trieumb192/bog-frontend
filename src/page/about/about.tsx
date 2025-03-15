@@ -1,9 +1,11 @@
 import React from 'react';
 import Footer from '../components/footer';
+import Header from '../components/header';
 
 const About: React.FC = () => {
   return (
     <div className="font-sans text-gray-800">
+      <Header/>
       {/* Hero Section */}
       <section className="relative h-[80vh] bg-cover bg-center" style={{ backgroundImage: "url('https://static.wixstatic.com/media/11062b_d1e3d3e8ee574cb9a6fce3d751fd382b~mv2.jpg')" }}>
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">

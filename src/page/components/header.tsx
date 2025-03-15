@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
-    <header className="relative flex justify-between items-center px-10 py-6 bg-slate-300 w-11/12">
+    <header className="relative flex justify-between items-center px-10 py-6 bg-white w-11/12">
       {/* Left - Name */}
       <div className="text-sm font-bold tracking-widest text-gray-900">@NGUYỄN VĂN TRIỆU</div>
 
@@ -14,16 +14,19 @@ const Header: React.FC = () => {
         <nav className="flex space-x-4 text-sm italic text-gray-800">
           <Link
             to="/"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="hover:underline"
           >
             Home
           </Link>
-          <a href="#" className="hover:underline">
-            Vlog
-          </a>
           <Link
             to="/about"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="hover:underline"
+          >
+            Vlog
+          </Link>
+          <Link
+            to="/vlog"
+            className="hover:underline"
           >
             About
           </Link>
