@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from '../components/footer';
 import Header from '../components/header';
+import { Drawer } from 'antd';
+import ContactDrawer from './components/contact-drawer ';
+import { Link } from 'react-router-dom';
 
 const About: React.FC = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <div className="font-sans bg-white text-gray-800">
       {/* Header */}
@@ -21,13 +25,14 @@ const About: React.FC = () => {
             Explore my journey as a passionate Backend Developer crafting scalable systems and digital solutions.
           </p>
           <div className="mt-8">
-            <a
-              href="/vlog"
+            <button
               className="inline-block px-10 py-4 bg-gray-900 text-white text-lg font-opensans rounded-full hover:bg-gray-700 transition duration-300"
+              onClick={() => setOpenDrawer(true)}
             >
               Contact Me
-            </a>
+            </button>
           </div>
+          <ContactDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}/>
         </div>
       </section>
 
@@ -72,12 +77,12 @@ const About: React.FC = () => {
         <h3 className="text-3xl md:text-4xl font-playfair font-semibold mb-8 text-gray-900">
           Follow me on my Vlog!
         </h3>
-        <a
-          href="/vlog"
+        <Link
+          to="/vlog"
           className="inline-block px-10 py-4 bg-gray-900 text-white text-lg font-opensans rounded-full hover:bg-gray-700 transition duration-300"
         >
           @myvlog
-        </a>
+        </Link>
       </section>
 
       {/* Footer */}
