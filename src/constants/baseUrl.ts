@@ -1,4 +1,5 @@
-export const BASE_URL_BLOG = "http://localhost:8086" + 'api/blog';
+export const BASE_URL_BLOG = "http://localhost:8068" + '/blog';
 
 
-export const BASE_URL_POST = `${BASE_URL_BLOG}/post`;
+export const BASE_URL_POST = "/post";
+export const BASE_URL_IMAGE = "/image";

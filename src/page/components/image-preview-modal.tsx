@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ImageDto } from '../../types/Dto';
 
 interface ImagePreviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  images: string[];
+  images: ImageDto[];
   userName: string;
   description: string;
 }
@@ -58,7 +59,7 @@ const ImagePreviewModal: React.FC<ImagePreviewModalProps> = (props) => {
 
           {/* Current Image */}
           <img
-            src={images[currentIndex]}
+            src={images[currentIndex].url}
             alt="Preview"
             className="max-h-full max-w-full object-contain"
           />
