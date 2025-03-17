@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaFacebookF,
   FaTwitter,
   FaYoutube,
-  FaInstagram
+  FaInstagram,
+  FaBars,
+  FaTimes
 } from 'react-icons/fa';
 import 'aos/dist/aos.css';
 import { useTheme } from '../contexts/theme-context';
@@ -14,6 +16,7 @@ const Header: React.FC = () => {
   const { theme } = useTheme();
   const darkMode = theme === 'dark';
   const menuItem = ['Home', 'Vlog', 'About'];
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header
@@ -48,8 +51,18 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
+        {/* MOBILE MENU BUTTON */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-xl focus:outline-none"
+          >
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+
         {/* SOCIAL + THEME SWITCH */}
-        <div className="flex items-center space-x-4" data-aos="fade-left" data-aos-delay="400">
+        <div className="hidden md:flex items-center space-x-4" data-aos="fade-left" data-aos-delay="400">
           {/* SOCIAL ICONS */}
           <div className="hidden md:flex space-x-3 text-lg">
             <FaFacebookF
@@ -74,6 +87,40 @@ const Header: React.FC = () => {
           <ThemeSwitcher />
         </div>
       </div>
+
+      {/* MOBILE MENU */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-gray-800 bg-opacity-95 fixed top-16 left-0 w-full h-full flex flex-col items-center py-4">
+          {menuItem.map((item, idx) => (
+            <Link
+              key={idx}
+              to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+              className="text-lg font-medium text-white py-2 hover:text-pink-500 transition-colors duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item}
+            </Link>
+          ))}
+          <div className="flex space-x-4 mt-4">
+            <FaFacebookF
+              className="cursor-pointer text-white text-xl hover:text-blue-600 transition-colors duration-300"
+              onClick={() => window.open('https://www.facebook.com/trieupro.yuki', '_blank')}
+            />
+            <FaTwitter
+              className="cursor-pointer text-white text-xl hover:text-blue-400 transition-colors duration-300"
+              onClick={() => window.open('https://twitter.com/yourprofile', '_blank')}
+            />
+            <FaYoutube
+              className="cursor-pointer text-white text-xl hover:text-red-600 transition-colors duration-300"
+              onClick={() => window.open('https://www.youtube.com/@KunKumTV', '_blank')}
+            />
+            <FaInstagram
+              className="cursor-pointer text-white text-xl hover:text-pink-500 transition-colors duration-300"
+              onClick={() => window.open('https://www.instagram.com/yourprofile', '_blank')}
+            />
+          </div>
+        </div>
+      )}
     </header>
   );
 };
