@@ -71,7 +71,7 @@ const Header: React.FC = () => {
             />
             <FaTwitter
               className="cursor-pointer transition-transform duration-300 hover:text-blue-400 hover:scale-110"
-              onClick={() => window.open('https://twitter.com/yourprofile', '_blank')}
+              onClick={() => window.open('https://www.youtube.com/@KunKumTV', '_blank')}
             />
             <FaYoutube
               className="cursor-pointer transition-transform duration-300 hover:text-red-600 hover:scale-110"
@@ -79,7 +79,7 @@ const Header: React.FC = () => {
             />
             <FaInstagram
               className="cursor-pointer transition-transform duration-300 hover:text-pink-500 hover:scale-110"
-              onClick={() => window.open('https://www.instagram.com/yourprofile', '_blank')}
+              onClick={() => window.open('https://www.youtube.com/@KunKumTV', '_blank')}
             />
           </div>
 
@@ -90,36 +90,47 @@ const Header: React.FC = () => {
 
       {/* MOBILE MENU */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gray-800 bg-opacity-95 fixed top-16 left-0 w-full h-full flex flex-col items-center py-4">
-          {menuItem.map((item, idx) => (
-            <Link
-              key={idx}
-              to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-              className="text-lg font-medium text-white py-2 hover:text-pink-500 transition-colors duration-300"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item}
-            </Link>
-          ))}
-          <div className="flex space-x-4 mt-4">
-            <FaFacebookF
-              className="cursor-pointer text-white text-xl hover:text-blue-600 transition-colors duration-300"
-              onClick={() => window.open('https://www.facebook.com/trieupro.yuki', '_blank')}
-            />
-            <FaTwitter
-              className="cursor-pointer text-white text-xl hover:text-blue-400 transition-colors duration-300"
-              onClick={() => window.open('https://twitter.com/yourprofile', '_blank')}
-            />
-            <FaYoutube
-              className="cursor-pointer text-white text-xl hover:text-red-600 transition-colors duration-300"
-              onClick={() => window.open('https://www.youtube.com/@KunKumTV', '_blank')}
-            />
-            <FaInstagram
-              className="cursor-pointer text-white text-xl hover:text-pink-500 transition-colors duration-300"
-              onClick={() => window.open('https://www.instagram.com/yourprofile', '_blank')}
-            />
+        <>
+          {/* Overlay */}
+          <div
+            className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setMobileMenuOpen(false)}
+          ></div>
+
+          {/* Mobile Menu */}
+          <div
+            className="md:hidden bg-gray-800 bg-opacity-95 fixed top-16 left-0 w-full h-auto max-h-[calc(100vh-4rem)] overflow-y-auto z-50 flex flex-col items-center py-4 transition-transform duration-300 ease-in-out"
+          >
+            {menuItem.map((item, idx) => (
+              <Link
+                key={idx}
+                to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                className="text-lg font-medium text-white py-3 hover:text-pink-500 transition-colors duration-300"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item}
+              </Link>
+            ))}
+            <div className="flex space-x-6 mt-4">
+              <FaFacebookF
+                className="cursor-pointer text-white text-2xl hover:text-blue-600 transition-colors duration-300"
+                onClick={() => window.open('https://www.facebook.com/trieupro.yuki', '_blank')}
+              />
+              <FaTwitter
+                className="cursor-pointer text-white text-2xl hover:text-blue-400 transition-colors duration-300"
+                onClick={() => window.open('https://twitter.com/yourprofile', '_blank')}
+              />
+              <FaYoutube
+                className="cursor-pointer text-white text-2xl hover:text-red-600 transition-colors duration-300"
+                onClick={() => window.open('https://www.youtube.com/@KunKumTV', '_blank')}
+              />
+              <FaInstagram
+                className="cursor-pointer text-white text-2xl hover:text-pink-500 transition-colors duration-300"
+                onClick={() => window.open('https://www.instagram.com/yourprofile', '_blank')}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
