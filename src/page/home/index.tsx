@@ -15,7 +15,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <main className="pt-[80px] flex flex-col items-center justify-center w-full">
+      <main className="pt-[70px] flex flex-col items-center justify-center w-full">
         {/* Hero Section */}
         <HeroSection />
 

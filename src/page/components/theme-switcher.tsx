@@ -1,32 +1,48 @@
-import { useTheme } from "../contexts/theme-context";
-
+import { useTheme } from '../contexts/theme-context';
+import { Dropdown, Menu, Button } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 const themes = ['light', 'dark', 'neon', 'pastel', 'retro', 'cyberpunk'];
 
 const ThemeSwitcher = () => {
   const { theme, setTheme, toggleDarkMode } = useTheme();
 
-  return (
-    <div className="flex gap-2 items-center">
+  // Tạo menu dropdown
+  const menu = (
+    <Menu
+      selectedKeys={[theme]} 
+      onClick={({ key }) => setTheme(key)}
+    >
       {themes.map((t) => (
-        <button
-          key={t}
-          onClick={() => setTheme(t)}
-          className={`px-3 py-2 rounded-lg text-sm capitalize transition-all duration-300 ${
-            theme === t
-              ? 'bg-pink-500 text-white shadow-lg scale-110'
-              : 'bg-gray-200 text-gray-800 hover:bg-pink-300'
-          }`}
-        >
+        <Menu.Item key={t} className="capitalize">
           {t}
-        </button>
+        </Menu.Item>
       ))}
-      <button
+    </Menu>
+  );
+
+  return (
+    <div className="flex gap-3 items-center">
+      {/* Dropdown chọn theme */}
+      <Dropdown overlay={menu} trigger={['click']}>
+        <Button
+          className="flex items-center justify-between"
+          style={{
+            backgroundColor: theme === 'dark' ? '#1f2937' : '#f3f4f6',
+            color: theme === 'dark' ? '#fff' : '#1f2937',
+          }}
+        >
+          Theme: <span className="capitalize ml-1">{theme}</span> <DownOutlined className="ml-2" />
+        </Button>
+      </Dropdown>
+
+      {/* Nút toggle Auto Dark/Light */}
+      <Button
         onClick={toggleDarkMode}
-        className="px-4 py-2 rounded bg-blue-400 text-white hover:bg-blue-600 transition"
+        className="bg-blue-400 text-white hover:bg-blue-600"
       >
         Auto Light/Dark
-      </button>
+      </Button>
     </div>
   );
 };
