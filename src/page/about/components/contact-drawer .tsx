@@ -13,7 +13,7 @@ const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer
         <div className="flex items-center space-x-4">
           <Avatar
             size={64}
-            src="https://www.facebook.com/photo/?fbid=3259636074077582&set=a.264711583570061"
+            src="https://scontent.fhan2-3.fna.fbcdn.net/v/t1.6435-9/70855330_3259636084077581_5727646885615763456_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEzFyLNZ0aq36nQn00Kpr87WHYpy_mXCsZYdinL-ZcKxlrMwkqw82bTQS-N2vEktuuXVyTxrO8V1MRngjdEiwvO&_nc_ohc=-pzcbrHlvTAQ7kNvgHTEXw9&_nc_oc=Adi-EBnWtz6SpagWu44klmysKtmnuQ8PY_Twfx4qubhN7VsVLunBgKfo2Z5Xzk9FFSk&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=5pQsuOK2wZ5-_ca5_LPcog&oh=00_AYHHthA0wL9cFbHpbaB4flL4y1oHaMXBAIOFbtvFkBEZww&oe=67FF218B"
           />
           <div>
             <h2 className="text-xl font-bold text-gray-800">VAN TRIEU NGUYEN</h2>
@@ -24,7 +24,6 @@ const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer
       onClose={() => setOpenDrawer(false)}
       open={openDrawer}
       width={450}
-      closeIcon={false}
     >
       <div className="flex flex-col space-y-6 p-2">
         {/* Contact Info */}
@@ -57,38 +56,38 @@ const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer
           </div>
         </div>
 
-        {/* Social Links */}
-        <div className="flex justify-start space-x-4">
-          {/* Github */}
-          <a
-            href="https://github.com/Trieumb192"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 bg-gray-100 rounded-full hover:bg-blue-500 hover:text-white transition-all"
-          >
-            <Github size={20} />
-          </a>
-
-          {/* Website */}
-          <a
-            href="https://trieunguyen-blog.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 bg-gray-100 rounded-full hover:bg-blue-500 hover:text-white transition-all"
-          >
-            <Globe size={20} />
-          </a>
-        </div>
-
-        {/* Download CV Button */}
-        <a
-            href="https://drive.google.com/uc?export=download&id=0By9KANeuGwW_S2p1a3pPaTlQVFNOSm5Pd3Z1N2MzT3YtYzhJ"
-            target="_blank"
-            rel="noopener noreferrer"
-           className="p-3 bg-gray-100 rounded-full hover:bg-blue-500 hover:text-white transition-all"
+        {/* Github */}
+        <div className="flex items-center space-x-3">
+            <Github className="text-blue-500" size={20} />
+            <a 
+                href="https://github.com/Trieumb192" 
+                className="hover:text-blue-600 transition"
             >
-            <Download size={20} />
-        </a>
+              https://github.com/Trieumb192
+            </a>
+        </div>
+          
+        {/* Website */}
+        <div className="flex items-center space-x-3">
+            <Globe className="text-blue-500" size={20} />
+            <a 
+                href="https://trieunguyen-blog.netlify.app/" 
+                className="hover:text-blue-600 transition"
+            >
+              https://trieunguyen-blog.netlify.app/
+            </a>
+        </div>
+      
+        {/* Download CV Button */}
+        <div className="flex items-center space-x-3">
+            <Download className="text-blue-500" size={20} />
+            <a 
+                href="https://drive.google.com/uc?export=download&id=0By9KANeuGwW_S2p1a3pPaTlQVFNOSm5Pd3Z1N2MzT3YtYzhJ" 
+                className="hover:text-blue-600 transition"
+            >
+              Tải xuống CV
+            </a>
+        </div>
       </div>
     </Drawer>
   );

@@ -1,62 +1,77 @@
 import React, { useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
+import { FaPlay, FaChevronDown } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import VideoModal from './video-modal';
+import { useTheme } from '../contexts/theme-context';
 
 const Hero: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
+  const { theme } = useTheme();
 
-  const handlePlay = () => {
-    setShowVideo(true);
+  const handleScrollDown = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
   };
 
-  const handleClose = () => {
-    setShowVideo(false);
-  };
+  const VIDEO_URL = 'https://www.youtube.com/embed/hLQl3WQQoQ0';
 
   return (
-    <section className="relative w-full h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://media.istockphoto.com/id/1382275104/vi/anh/metaverse-city-v%C3%A0-cyberpunk-concept-k%E1%BA%BFt-xu%E1%BA%A5t-3d.jpg?s=2048x2048&w=is&k=20&c=RIX8yIGNWuHvxWkp08rmq7lVuBIHsgiOxMvnCQaFCJk=')" }}>
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-40" />
+    <section
+      className="relative w-full h-screen bg-cover bg-center overflow-hidden"
+      style={{
+        backgroundImage:
+          theme === 'dark'
+            ? "url('https://media.istockphoto.com/id/1382275104/vi/anh/metaverse-city-v%C3%A0-cyberpunk-concept-k%E1%BA%BFt-xu%E1%BA%A5t-3d.jpg')"
+            : "url('https://media.istockphoto.com/id/1409470312/vi/anh/futuristic-city.jpg')"
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 animate-pulse opacity-50" />
 
-      {/* Content */}
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center px-4">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">Welcome to My Lifestyle</h1>
-        <p className="text-lg md:text-2xl mb-8">Follow my journey and get inspired every day</p>
-
-        {/* Play Button */}
-        <button
-          onClick={handlePlay}
-          className="flex items-center justify-center w-20 h-20 bg-white text-black rounded-full hover:bg-gray-200 transition relative"
+        <motion.h1
+          className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 drop-shadow-lg"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <FaPlay className="text-2xl ml-1" />
-        </button>
+          Welcome to My Lifestyle
+        </motion.h1>
+
+        <motion.p
+          className="text-lg md:text-2xl mb-10 max-w-xl drop-shadow"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          Follow my journey and get inspired every day.
+        </motion.p>
+
+        <motion.button
+          aria-label="Play video"
+          title="Play video"
+          onClick={() => setShowVideo(true)}
+          className="flex items-center justify-center w-20 h-20 bg-white text-black rounded-full shadow-lg hover:scale-110 transition-transform duration-300 ease-in-out relative group"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <FaPlay className="text-2xl ml-1 group-hover:text-pink-600 transition-colors duration-300" />
+          <span className="absolute w-full h-full rounded-full animate-ping bg-white opacity-20" />
+        </motion.button>
+
+        <motion.div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white cursor-pointer"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          onClick={handleScrollDown}
+        >
+          <FaChevronDown size={24} className="animate-bounce" />
+        </motion.div>
       </div>
 
-      {/* Video Modal */}
-      {showVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="relative w-11/12 md:w-3/4 lg:w-1/2">
-            {/* Close button */}
-            <button
-              onClick={handleClose}
-              className="absolute top-2 right-2 text-white text-3xl font-bold z-10"
-            >
-              &times;
-            </button>
-
-            {/* Video Embed */}
-            <div className="relative pt-[56.25%]">
-              <iframe
-                src="https://www.youtube.com/embed/hLQl3WQQoQ0"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                className="absolute top-0 left-0 w-full h-full"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      )}
+      <VideoModal
+        show={showVideo}
+        handleClose={() => setShowVideo(false)}
+        videoUrl={VIDEO_URL}
+      />
     </section>
   );
 };

@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 
 const About: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  
   return (
     <div className="font-sans bg-white text-gray-800">
       {/* Header */}
-      <Header />
+      <Header darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
 
       {/* Hero Section */}
       <section className="relative min-h-[60vh] bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">

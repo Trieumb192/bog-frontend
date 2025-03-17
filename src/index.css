@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.neon-text {
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff0090, 0 0 20px #ff0090;
+}
+
+.cyberpunk-border {
+    border: 2px solid #ff0090;
+    box-shadow: 0 0 5px #ff0090, 0 0 15px #ff0090;
+}
