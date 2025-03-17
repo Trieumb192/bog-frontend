@@ -20,8 +20,8 @@ const Hero: React.FC = () => {
       style={{
         backgroundImage:
           theme === 'dark'
-            ? "url('https://media.istockphoto.com/id/1382275104/vi/anh/metaverse-city-v%C3%A0-cyberpunk-concept-k%E1%BA%BFt-xu%E1%BA%A5t-3d.jpg')"
-            : "url('https://media.istockphoto.com/id/1409470312/vi/anh/futuristic-city.jpg')"
+            ? "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyankJg5K1G1j2I_dDYTFis30KQpLq9whJGg&s')"
+            : "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsqY1K-pOl6Ejp7sjj0z_mRk9o_XHDw08IkQ&s')"
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 animate-pulse opacity-50" />
@@ -66,7 +66,6 @@ const Hero: React.FC = () => {
           <FaChevronDown size={24} className="animate-bounce" />
         </motion.div>
       </div>
-
       <VideoModal
         show={showVideo}
         handleClose={() => setShowVideo(false)}

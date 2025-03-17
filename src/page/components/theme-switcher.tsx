@@ -1,48 +1,50 @@
 import { useTheme } from '../contexts/theme-context';
 import { Dropdown, Menu, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { FaSun, FaMoon, FaRocket, FaPalette, FaRobot, FaBolt } from 'react-icons/fa';
 
-const themes = ['light', 'dark', 'neon', 'pastel', 'retro', 'cyberpunk'];
+const themes = [
+  { name: 'light', color: '#fefcbf', icon: <FaSun /> },
+  { name: 'dark', color: '#1f2937', icon: <FaMoon /> },
+  { name: 'neon', color: '#39ff14', icon: <FaBolt /> },
+  { name: 'pastel', color: '#ffd1dc', icon: <FaPalette /> },
+  { name: 'retro', color: '#ff8c00', icon: <FaRocket /> },
+  { name: 'cyberpunk', color: '#ff00ff', icon: <FaRobot /> },
+];
 
 const ThemeSwitcher = () => {
-  const { theme, setTheme, toggleDarkMode } = useTheme();
+  const { theme, setTheme } = useTheme();
 
-  // Tạo menu dropdown
   const menu = (
     <Menu
-      selectedKeys={[theme]} 
+      selectedKeys={[theme]}
       onClick={({ key }) => setTheme(key)}
+      className="rounded-lg overflow-hidden"
     >
       {themes.map((t) => (
-        <Menu.Item key={t} className="capitalize">
-          {t}
+        <Menu.Item key={t.name}>
+          <div className="flex items-center gap-2">
+            {t.icon}
+            <span className="capitalize">{t.name}</span>
+          </div>
         </Menu.Item>
       ))}
     </Menu>
   );
 
   return (
-    <div className="flex gap-3 items-center">
-      {/* Dropdown chọn theme */}
+    <div className="flex items-center gap-3">
       <Dropdown overlay={menu} trigger={['click']}>
         <Button
-          className="flex items-center justify-between"
-          style={{
-            backgroundColor: theme === 'dark' ? '#1f2937' : '#f3f4f6',
-            color: theme === 'dark' ? '#fff' : '#1f2937',
-          }}
+          className={`flex items-center gap-2 px-4 py-1.5 rounded-lg shadow-sm transition duration-300
+            ${theme === 'dark'
+              ? 'bg-gray-800 text-white hover:bg-gray-700'
+              : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
         >
-          Theme: <span className="capitalize ml-1">{theme}</span> <DownOutlined className="ml-2" />
+          <span className="capitalize font-medium">{theme}</span>
+          <DownOutlined />
         </Button>
       </Dropdown>
-
-      {/* Nút toggle Auto Dark/Light */}
-      <Button
-        onClick={toggleDarkMode}
-        className="bg-blue-400 text-white hover:bg-blue-600"
-      >
-        Auto Light/Dark
-      </Button>
     </div>
   );
 };

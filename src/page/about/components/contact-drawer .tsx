@@ -46,16 +46,7 @@ const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer
               trieumb192@gmail.com
             </a>
           </div>
-
-          {/* Address */}
-          <div className="flex items-start space-x-3">
-            <MapPin className="text-blue-500 mt-1" size={20} />
-            <p className="text-gray-700 leading-snug">
-              No.15, 6 alley, 199 lane, Thuy Khue street, Tay Ho district, Ha Noi city
-            </p>
-          </div>
-        </div>
-
+          
         {/* Github */}
         <div className="flex items-center space-x-3">
             <Github className="text-blue-500" size={20} />
@@ -87,6 +78,15 @@ const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer
             >
               Tải xuống CV
             </a>
+        </div>
+
+         {/* Address */}
+         <div className="flex items-start space-x-3">
+            <MapPin className="text-blue-500 mt-1" size={20} />
+            <p className="text-gray-700 leading-snug">
+              No.15, 6 alley, 199 lane, Thuy Khue street, Tay Ho district, Ha Noi city
+            </p>
+          </div>
         </div>
       </div>
     </Drawer>
