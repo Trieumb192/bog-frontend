@@ -7,7 +7,7 @@ const SectionVlog = () => {
 
   const isDark = theme === 'dark';
   const bgColor = isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800';
-  const buttonColor = isDark ? 'bg-white text-gray-800 hover:bg-gray-300' : 'bg-primary text-white hover:bg-secondary';
+  const buttonColor = isDark ? 'bg-white text-gray-800 hover:bg-gray-300' : 'bg-white text-gray-800 hover:bg-gray-300';
 
   return (
     <section
@@ -34,7 +34,7 @@ const SectionVlog = () => {
           Explore the latest insights, tips, and stories from our team. Don’t miss out on the latest trends and discussions!
         </p>
         <Link
-          to="/vlogs"
+          to="/vlog"
           className={`inline-block px-6 py-3 rounded-lg font-semibold transition duration-300 ${buttonColor}`}
         >
           Watch More Vlogs

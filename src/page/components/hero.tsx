@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className="relative w-full h-screen bg-cover bg-center overflow-hidden"
+      className="relative w-full bg-cover bg-center overflow-hidden"
       style={{
         backgroundImage:
           theme === 'dark'
