@@ -7,11 +7,10 @@ interface ImagePreviewModalProps {
   onClose: () => void;
   images: ImageDto[];
   userName: string;
-  description: string;
 }
 
 const ImagePreviewModal: React.FC<ImagePreviewModalProps> = (props) => {
-  const { isOpen, onClose, images, userName, description } = props;
+  const { isOpen, onClose, images, userName } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!isOpen) return null;
@@ -72,7 +71,7 @@ const ImagePreviewModal: React.FC<ImagePreviewModalProps> = (props) => {
               <div className="text-lg font-semibold">@{userName}</div>
             </div>
             <div className="flex-grow overflow-y-auto text-sm text-gray-700 leading-relaxed">
-              {description}
+              {images[currentIndex].tag}
             </div>
           </div>
 

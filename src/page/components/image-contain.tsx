@@ -2,7 +2,7 @@ import { FaFacebook } from 'react-icons/fa';
 import ImagePreviewModal from './image-preview-modal';
 import { useCallback, useEffect, useState } from 'react';
 import { ImageDto } from '../../types/Dto';
-import { getImages } from '../../service/ImageApi';
+import { ImageApi } from '../../service/ImageApi';
 
 // const images = [
 //   'https://scontent.fhan15-1.fna.fbcdn.net/v/t39.30808-6/483509127_3124536654364350_2143876610279505076_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGe34d1eRrvBpr0vOmsk67PmsMtQIWzgcmawy1AhbOByfoSAfd8E66mzzCm-8bE-NBnhw3fhcMEtzBQzZ1NbhF_&_nc_ohc=0BZqA3wm2VIQ7kNvgHpAi_2&_nc_oc=AdgWRjsjcb7-dlafwa0Gk27s2ppfs18Q6erXL-DG90_XnNZUBCAcsI20BbUuNp_QhZTypczHIzF8Hf7Qb1uaRRfu&_nc_zt=23&_nc_ht=scontent.fhan15-1.fna&_nc_gid=Jt6ernMlNFT79Cr0Esqn0w&oh=00_AYHnGHoOGxaliJWZDahqkMmNDUUEfYUFP7ECAnBuUIVYKw&oe=67DB4119',
@@ -24,7 +24,7 @@ const ImagesContain = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await getImages();
+        const res = await ImageApi.getImages();
         setImages(res.data);
       } catch (err) {
         console.error('Error fetching images:', err);
@@ -76,7 +76,6 @@ const ImagesContain = () => {
         onClose={() => setIsModalOpen(false)}
         images={images}
         userName="trieunguyen"
-        description={`#trieunguyen, #family, #websitetemplate, #https://trieunguyen-blog.netlify.app/`}
       />
     </section>
   );

@@ -6,17 +6,34 @@ import {
   FaYoutube,
   FaInstagram,
   FaBars,
-  FaTimes
+  FaTimes,
+  FaUserCircle
 } from 'react-icons/fa';
 import 'aos/dist/aos.css';
 import { useTheme } from '../contexts/theme-context';
 import ThemeSwitcher from './theme-switcher';
+import { Avatar, Button, Dropdown, Menu } from 'antd';
+import AuthModal from './auth-modal';
+import { useAuth } from '../contexts/auth-context';
 
 const Header: React.FC = () => {
   const { theme } = useTheme();
   const darkMode = theme === 'dark';
   const menuItem = ['Home', 'Vlog', 'About'];
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth(); 
+
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="profile">
+        <Link to="/profile">Trang cá nhân</Link>
+      </Menu.Item>
+      <Menu.Item key="logout" onClick={logout}>
+        Đăng xuất
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <header
@@ -86,7 +103,31 @@ const Header: React.FC = () => {
           {/* THEME SWITCH */}
           <ThemeSwitcher />
         </div>
+
+        {/* Login/Register or User Info */}
+        {isAuthenticated ? (
+            <Dropdown overlay={userMenu} trigger={['click']}>
+              <div className="cursor-pointer flex items-center gap-2">
+                <Avatar icon={<FaUserCircle />} />
+                <span className="capitalize font-medium">{user?.fullName}</span>
+              </div>
+            </Dropdown>
+          ) : (
+            <Button
+              type="primary"
+              onClick={() => setAuthModalVisible(true)}
+              className="rounded-lg"
+            >
+              Đăng nhập
+            </Button>
+          )}
       </div>
+      
+       {/* Modal */}
+       <AuthModal
+        visible={authModalVisible}
+        onClose={() => setAuthModalVisible(false)}
+      />
 
       {/* MOBILE MENU */}
       {isMobileMenuOpen && (

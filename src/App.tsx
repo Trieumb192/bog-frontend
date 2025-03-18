@@ -9,6 +9,7 @@ import 'aos/dist/aos.css';
 
 import { motion } from 'framer-motion';
 import { ThemeProvider, useTheme } from './page/contexts/theme-context';
+import { AuthProvider } from './page/contexts/auth-context';
 
 // Theme màu toàn app
 const themeColors: Record<string, { bg: string; text: string }> = {
@@ -54,7 +55,9 @@ const AppContent = () => {
 
 const App: React.FC = () => (
   <ThemeProvider>
-    <AppContent />
+    <AuthProvider> 
+      <AppContent />
+    </AuthProvider>
   </ThemeProvider>
 );
 
