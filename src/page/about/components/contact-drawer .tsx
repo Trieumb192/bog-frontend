@@ -3,9 +3,9 @@ import { Phone, Mail, MapPin, Github, Globe, Download } from 'lucide-react';
 import React from 'react';
 
 interface ContactDrawerProps {
-    openDrawer: boolean;
-    setOpenDrawer: (isOpen: boolean) => void;
-} 
+  openDrawer: boolean;
+  setOpenDrawer: (isOpen: boolean) => void;
+}
 const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer }) => {
   return (
     <Drawer
@@ -31,61 +31,56 @@ const ContactDrawer: React.FC<ContactDrawerProps> = ({ openDrawer, setOpenDrawer
           {/* Phone */}
           <div className="flex items-center space-x-3">
             <Phone className="text-blue-500" size={20} />
-            <a href="tel:0971930656" className="hover:text-blue-600 transition">
+            <p className="text-gray-700 leading-snug">
               0971.930.656
-            </a>
+            </p>
+          </div>
+
+          {/* Address */}
+          <div className="flex items-start space-x-3">
+            <MapPin className="text-blue-500 mt-1" size={20} />
+            <p className="text-gray-700 leading-snug">
+              No.15, 6 alley, 199 lane, Thuy Khue street, Tay Ho district, Ha Noi city
+            </p>
           </div>
 
           {/* Email */}
           <div className="flex items-center space-x-3">
             <Mail className="text-blue-500" size={20} />
-            <a
-              href="mailto:trieumb192@gmail.com"
-              className="hover:text-blue-600 transition"
-            >
+            <a href="mailto:trieumb192@gmail.com" className="hover:text-blue-600 transition">
               trieumb192@gmail.com
             </a>
           </div>
-          
-        {/* Github */}
-        <div className="flex items-center space-x-3">
+
+          {/* Github */}
+          <div className="flex items-center space-x-3">
             <Github className="text-blue-500" size={20} />
-            <a 
-                href="https://github.com/Trieumb192" 
-                className="hover:text-blue-600 transition"
-            >
+            <a href="https://github.com/Trieumb192" target="_blank" className="hover:text-blue-600 transition">
               https://github.com/Trieumb192
             </a>
-        </div>
-          
-        {/* Website */}
-        <div className="flex items-center space-x-3">
+          </div>
+
+          {/* Website */}
+          <div className="flex items-center space-x-3">
             <Globe className="text-blue-500" size={20} />
-            <a 
-                href="https://trieunguyen-blog.netlify.app/" 
-                className="hover:text-blue-600 transition"
+            <a
+              target="_blank"
+              href="https://trieunguyen-blog.netlify.app/"
+              className="hover:text-blue-600 transition"
             >
               https://trieunguyen-blog.netlify.app/
             </a>
-        </div>
-      
-        {/* Download CV Button */}
-        <div className="flex items-center space-x-3">
+          </div>
+
+          {/* Download CV Button */}
+          <div className="flex items-center space-x-3">
             <Download className="text-blue-500" size={20} />
-            <a 
-                href="https://drive.google.com/uc?export=download&id=0By9KANeuGwW_S2p1a3pPaTlQVFNOSm5Pd3Z1N2MzT3YtYzhJ" 
-                className="hover:text-blue-600 transition"
+            <a
+              href="https://drive.google.com/uc?export=download&id=1h4vcbK5Jj2KrrIHiubqCky7maxonXO3F"
+              className="hover:text-blue-600 transition"
             >
               Tải xuống CV
             </a>
-        </div>
-
-         {/* Address */}
-         <div className="flex items-start space-x-3">
-            <MapPin className="text-blue-500 mt-1" size={20} />
-            <p className="text-gray-700 leading-snug">
-              No.15, 6 alley, 199 lane, Thuy Khue street, Tay Ho district, Ha Noi city
-            </p>
           </div>
         </div>
       </div>
