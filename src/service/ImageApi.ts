@@ -8,7 +8,7 @@ interface IImageApi {
 
 export const ImageApi: IImageApi = {
   async getImages() {
-    const res = await axios.post<{ statusCode: number; data: ImageDto[] }>(`${BASE_URL_IMAGE}/create`);
+    const res = await axios.post<{ statusCode: number; data: ImageDto[] }>(`${BASE_URL_IMAGE}/find-all`);
     return res.data;
   },
 

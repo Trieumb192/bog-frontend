@@ -10,6 +10,7 @@ import 'aos/dist/aos.css';
 import { motion } from 'framer-motion';
 import { ThemeProvider, useTheme } from './page/contexts/theme-context';
 import { AuthProvider } from './page/contexts/auth-context';
+import Admin from './page/admin';
 
 // Theme màu toàn app
 const themeColors: Record<string, { bg: string; text: string }> = {
@@ -47,6 +48,7 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/vlog" element={<Vlog />} />
+          <Route path="/Admin" element={<Admin />} />
         </Routes>
       </Router>
     </motion.div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaFacebookF,
@@ -7,7 +7,7 @@ import {
   FaInstagram,
   FaBars,
   FaTimes,
-  FaUserCircle
+  FaUserCircle,
 } from 'react-icons/fa';
 import 'aos/dist/aos.css';
 import { useTheme } from '../contexts/theme-context';
@@ -22,7 +22,14 @@ const Header: React.FC = () => {
   const menuItem = ['Home', 'Vlog', 'About'];
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth(); 
+  const { user, isAuthenticated, logout } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated && user?.role?.includes("admin")) {
+      menuItem.concat("Admin");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, user?.role]);
 
   const userMenu = (
     <Menu>
@@ -41,7 +48,6 @@ const Header: React.FC = () => {
       data-aos="fade-down"
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-3">
-        
         {/* LOGO */}
         <Link
           to="/"
@@ -79,7 +85,11 @@ const Header: React.FC = () => {
         </div>
 
         {/* SOCIAL + THEME SWITCH */}
-        <div className="hidden md:flex items-center space-x-4" data-aos="fade-left" data-aos-delay="400">
+        <div
+          className="hidden md:flex items-center space-x-4"
+          data-aos="fade-left"
+          data-aos-delay="400"
+        >
           {/* SOCIAL ICONS */}
           <div className="hidden md:flex space-x-3 text-lg">
             <FaFacebookF
@@ -102,32 +112,38 @@ const Header: React.FC = () => {
 
           {/* THEME SWITCH */}
           <ThemeSwitcher />
-        </div>
 
-        {/* Login/Register or User Info */}
-        {isAuthenticated ? (
-            <Dropdown overlay={userMenu} trigger={['click']}>
-              <div className="cursor-pointer flex items-center gap-2">
-                <Avatar icon={<FaUserCircle />} />
-                <span className="capitalize font-medium">{user?.fullName}</span>
-              </div>
-            </Dropdown>
-          ) : (
-            <Button
-              type="primary"
-              onClick={() => setAuthModalVisible(true)}
-              className="rounded-lg"
-            >
-              Đăng nhập
-            </Button>
-          )}
+          {/* Login/Register or User Info */}
+          <div className="flex items-center ml-auto">
+            {isAuthenticated ? (
+              <Dropdown overlay={userMenu} trigger={['click']}>
+                <div
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full cursor-pointer transition-colors duration-300
+                  ${darkMode ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}`}
+                >
+                  <Avatar
+                    icon={<FaUserCircle />}
+                    size="small"
+                    className={`border ${darkMode ? 'border-gray-600' : 'border-gray-300'}`}
+                  />
+                  <span className="capitalize font-medium hidden md:block">{user?.fullName}</span>
+                </div>
+              </Dropdown>
+            ) : (
+              <Button
+                onClick={() => setAuthModalVisible(true)}
+                className={`flex items-center gap-2 px-4 py-1.5 rounded-lg shadow-sm transition duration-300
+                  ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+              >
+                Đăng nhập
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
-      
-       {/* Modal */}
-       <AuthModal
-        visible={authModalVisible}
-        onClose={() => setAuthModalVisible(false)}
-      />
+
+      {/* Modal */}
+      <AuthModal visible={authModalVisible} onClose={() => setAuthModalVisible(false)} />
 
       {/* MOBILE MENU */}
       {isMobileMenuOpen && (
@@ -139,9 +155,7 @@ const Header: React.FC = () => {
           ></div>
 
           {/* Mobile Menu */}
-          <div
-            className="md:hidden bg-gray-800 bg-opacity-95 fixed top-16 left-0 w-full h-auto max-h-[calc(100vh-4rem)] overflow-y-auto z-50 flex flex-col items-center py-4 transition-transform duration-300 ease-in-out"
-          >
+          <div className="md:hidden bg-gray-800 bg-opacity-95 fixed top-16 left-0 w-full h-auto max-h-[calc(100vh-4rem)] overflow-y-auto z-50 flex flex-col items-center py-4 transition-transform duration-300 ease-in-out">
             {menuItem.map((item, idx) => (
               <Link
                 key={idx}
@@ -152,6 +166,21 @@ const Header: React.FC = () => {
                 {item}
               </Link>
             ))}
+
+            {/* LOGIN BUTTON ON MOBILE */}
+            {!isAuthenticated && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  setAuthModalVisible(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="rounded-lg px-6 py-2 mt-4"
+              >
+                Đăng nhập
+              </Button>
+            )}
+
             <div className="flex space-x-6 mt-4">
               <FaFacebookF
                 className="cursor-pointer text-white text-2xl hover:text-blue-600 transition-colors duration-300"
