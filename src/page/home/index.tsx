@@ -37,7 +37,10 @@ const Home: React.FC = () => {
       {/* Main Content */}
       <main className="pt-[50px] flex flex-col items-center justify-center w-full">
         {/* Life Philosophy */}
-        <LifePhilosophy philosophies={philosophies}/>
+        {
+          philosophies.length > 0 &&
+          <LifePhilosophy philosophies={philosophies}/>
+        } 
         
         {/* Hero Section */}
         <HeroSection />

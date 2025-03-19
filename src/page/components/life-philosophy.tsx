@@ -13,6 +13,7 @@ const LifePhilosophy: React.FC<LifePhilosophyProps> = ({ philosophies }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const quotesLength = philosophies.length;
+
   const { content, author } = philosophies[currentIndex];
 
   const handleNext = useCallback(() => {
