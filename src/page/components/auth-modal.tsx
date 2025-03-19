@@ -30,14 +30,21 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   };
 
   const handleRegister = async(request: UserDto) => {
-    setLoading(true);
-    const result = await UserApi.create(request);
-    if (result.statusCode === HTTP_OK) {
-      message.success(result.message);
-    } else {
-      message.error(result.message);
-    }
-  };
+    try {
+      setLoading(true);
+      const result = await UserApi.create(request);
+      if (result.statusCode === HTTP_OK) {
+        message.success(result.message);
+      } else {
+        message.error(result.message);
+      }
+    } catch (error) {
+      console.log(error);
+      message.error('Có lỗi xảy ra. Vui lòng thử lại!');
+    } finally {
+      setLoading(false);
+    };
+  }
 
   return (
     <Modal
