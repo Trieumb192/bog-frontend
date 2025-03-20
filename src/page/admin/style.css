@@ -1,19 +1,68 @@
-.dark-table .ant-table {
-    background-color: #1f2937; 
-    color: #fff;
-  }
-  
-  .dark-table .ant-table-thead > tr > th {
-    background-color: #374151; 
-    color: #d1d5db; 
-  }
-  
-  .dark-modal .ant-modal-content {
-    background-color: #1f2937; 
-    color: #fff;
-  }
-  
-  .dark-modal .ant-modal-header {
-    background-color: #374151; 
-  }
-  
+
+  /* Button Styles */
+.custom-button {
+  border-radius: 6px;
+  padding: 4px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.custom-button-light {
+  background-color: #1890ff;
+  color: white;
+  border: none;
+}
+
+.custom-button-light:hover {
+  background-color: #40a9ff;
+}
+
+.custom-button-dark {
+  background-color: #1e293b; /* slate-800 */
+  color: #e2e8f0; /* gray-200 */
+  border: 1px solid #475569; /* slate-600 */
+}
+
+.custom-button-dark:hover {
+  background-color: #334155; /* slate-700 */
+}
+
+/* Danger button */
+.custom-button-danger-light {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.custom-button-danger-light:hover {
+  background-color: #ff7875;
+}
+
+.custom-button-danger-dark {
+  background-color: #7f1d1d; /* dark red */
+  color: #fca5a5;
+  border: 1px solid #ef4444;
+}
+
+.custom-button-danger-dark:hover {
+  background-color: #991b1b;
+}
+
+/* Modal dark theme */
+.dark-modal .ant-modal-content {
+  background-color: #1f2937;
+  color: white;
+}
+
+.dark-modal .ant-modal-header {
+  background-color: #1f2937;
+  border-bottom: 1px solid #374151;
+}
+
+.dark-modal .ant-modal-footer {
+  border-top: 1px solid #374151;
+}
+
+/* Table row hover effect */
+.table-hover-effect .ant-table-tbody > tr:hover > td {
+  background: rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
+}

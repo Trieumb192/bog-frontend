@@ -1,16 +1,19 @@
-import { Card } from "antd";
-import React, { useCallback, useState } from "react";
-import { MenuIds, menuIdUrlKey } from "./constant";
-import { getUrlQuery, setUrlQuery } from "../../utils/common";
-import LeftMenu from "./components/left-menu";
-import MainPage from "./components/main-page";
-import { useTheme } from "../contexts/theme-context";
-import "./style.css";
+import { Card } from 'antd';
+import React, { useCallback, useState } from 'react';
+import { MenuIds, menuIdUrlKey } from './constant';
+import { getUrlQuery, setUrlQuery } from '../../utils/common';
+import LeftMenu from './components/left-menu';
+import MainPage from './components/main-page';
+import { useTheme } from '../contexts/theme-context';
+import './style.css';
+import Header from '../components/header';
+import Footer from '../components/footer';
 
 const ManagePage: React.FC = () => {
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
+
   const [menuId, setMenuId] = useState<string>(() => {
-    return getUrlQuery(menuIdUrlKey, false) as string || MenuIds.IMAGE;
+    return (getUrlQuery(menuIdUrlKey, false) as string) || MenuIds.IMAGE;
   });
 
   const handleMenuChange = useCallback((newMenuKey: string) => {
@@ -19,32 +22,56 @@ const ManagePage: React.FC = () => {
   }, []);
 
   return (
-    <div className={`${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"} min-h-screen p-2`}>
-      <div className="max-w-7xl mx-auto">
-        <Card
-          title={<h1 className="text-xl md:text-2xl font-bold text-green-600">MANAGER</h1>}
-          headStyle={{
-            backgroundColor: theme === "dark" ? "#333" : "#FCD3C2",
-          }}
-          bodyStyle={{
-            padding: 0,
-          }}
-          className="shadow-lg rounded-2xl overflow-hidden"
-        >
-          <div className="flex flex-col md:flex-row">
-            {/* LeftMenu */}
-            <div className="md:w-1/4 w-full border-r border-gray-200 dark:border-gray-700">
-              <LeftMenu menuId={menuId} setMenuId={handleMenuChange} />
-            </div>
+    <>
+      <Header />
+      <div
+        className={`
+          ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}
+          min-h-screen pt-[65px]
+        `}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card
+            title={
+              <h1 className="text-xl md:text-2xl font-bold text-green-600">
+                MANAGER
+              </h1>
+            }
+            headStyle={{
+              backgroundColor: theme === 'dark' ? '#1f2937' : '#FCD3C2', // darker bg in dark theme
+            }}
+            bodyStyle={{
+              padding: 0,
+              backgroundColor: theme === 'dark' ? '#111827' : '#ffffff',
+            }}
+            className={`
+              shadow-xl rounded-2xl overflow-hidden
+              ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}
+            `}
+          >
+            <div className="flex flex-col md:flex-row">
+              {/* Left Menu */}
+              <aside
+                className={`
+                  md:w-1/4 w-full 
+                  ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'} 
+                  border-b md:border-b-0 md:border-r
+                  bg-white dark:bg-gray-800
+                `}
+              >
+                <LeftMenu menuId={menuId} setMenuId={handleMenuChange} />
+              </aside>
 
-            {/* MainPage */}
-            <div className="md:w-3/4 w-full">
-              <MainPage menuId={menuId} />
+              {/* Main Page */}
+              <main className="md:w-3/4 w-full p-4 bg-white dark:bg-gray-900">
+                <MainPage menuId={menuId} />
+              </main>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

@@ -143,7 +143,7 @@ const ImageManager: React.FC = () => {
               ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
             `}
           >
-            ADD IMAGE
+            ADD PHILOSOPHY
           </Button>
         }
         className={`
@@ -161,7 +161,7 @@ const ImageManager: React.FC = () => {
       </Card>
 
       <Modal
-        title={form.getFieldValue('id') ? 'Update Image' : 'Add Image'}
+        title={form.getFieldValue('id') ? 'Update Philosohy' : 'Add Philosohy'}
         open={isModalVisible}
         onOk={onSubmit}
         onCancel={onCancel}
@@ -197,24 +197,18 @@ const ImageManager: React.FC = () => {
         <Form form={form} layout="vertical">
           <Form.Item hidden name="id" />
           <Form.Item
-            label="Image URL"
-            name="url"
-            rules={[{ required: true, message: 'Please enter image URL!' }]}
+            label="Content"
+            name="content"
+            rules={[{ required: true, message: 'Please enter content!' }]}
           >
             <Input
-              placeholder="Enter image URL"
+              placeholder="Enter content"
               className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
             />
           </Form.Item>
-          <Form.Item label="Tag Name" name="tag">
+          <Form.Item label="Author" name="author">
             <Input
-              placeholder="Enter tag name"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
-            />
-          </Form.Item>
-          <Form.Item label="Image Type" name="type">
-            <Input
-              placeholder="Enter image type"
+              placeholder="Enter author"
               className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
             />
           </Form.Item>
