@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaFacebookF,
@@ -19,25 +19,18 @@ import { useAuth } from '../contexts/auth-context';
 const Header: React.FC = () => {
   const { theme } = useTheme();
   const darkMode = theme === 'dark';
-  const [menuItem, setMenuItem] = useState(['Home', 'Vlog', 'About']);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
 
-  useEffect(() => {
-    if (isAuthenticated && user?.role?.includes("admin")) {
-      setMenuItem(prev => {
-        if (!prev.includes("Admin")) {
-          return [...prev, "Admin"];
-        }
-        return prev;
-      });
-    } else {
-
-      setMenuItem(['Home', 'Vlog', 'About']);
+  const menuItem = useMemo(() => {
+    const items = ['Home', 'Vlog', 'About'];
+    if (isAuthenticated && user?.role?.includes('admin')) {
+      items.push('Admin');
     }
+    return items;
   }, [isAuthenticated, user?.role]);
-  
+
   const userMenu = (
     <Menu>
       <Menu.Item key="profile">
