@@ -1,0 +1,19 @@
+.dark-table .ant-table {
+    background-color: #1f2937; 
+    color: #fff;
+  }
+  
+  .dark-table .ant-table-thead > tr > th {
+    background-color: #374151; 
+    color: #d1d5db; 
+  }
+  
+  .dark-modal .ant-modal-content {
+    background-color: #1f2937; 
+    color: #fff;
+  }
+  
+  .dark-modal .ant-modal-header {
+    background-color: #374151; 
+  }
+  
