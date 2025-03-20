@@ -6,8 +6,14 @@ export interface ImageDto {
   createdAt?: string;
 }
 
+export interface ImageRqDto {
+  url: string;
+  tag: string;
+  type: string;
+}
+
 export interface PhilosophyDto {
-  id?: number;
+  id: number;
   content: string;
   author: string;
 }
