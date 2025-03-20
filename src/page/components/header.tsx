@@ -19,18 +19,25 @@ import { useAuth } from '../contexts/auth-context';
 const Header: React.FC = () => {
   const { theme } = useTheme();
   const darkMode = theme === 'dark';
-  const menuItem = ['Home', 'Vlog', 'About'];
+  const [menuItem, setMenuItem] = useState(['Home', 'Vlog', 'About']);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated && user?.role?.includes("admin")) {
-      menuItem.concat("Admin");
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, user?.role]);
+      setMenuItem(prev => {
+        if (!prev.includes("Admin")) {
+          return [...prev, "Admin"];
+        }
+        return prev;
+      });
+    } else {
 
+      setMenuItem(['Home', 'Vlog', 'About']);
+    }
+  }, [isAuthenticated, user?.role]);
+  
   const userMenu = (
     <Menu>
       <Menu.Item key="profile">
