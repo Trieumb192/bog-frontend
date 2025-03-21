@@ -1,19 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  message,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-} from 'antd';
+import { Card, Form, Input, message, Modal, Space, Table } from 'antd';
 import { ImageDto } from '../../../types/Dto';
 import { ImageApi } from '../../../service/ImageApi';
 import { HTTP_OK } from '../../../constants/common';
 import { useTheme } from '../../contexts/theme-context';
+import '../style.css';
+import CustomButton from '@/page/components/common/custom-button';
 
 const ImageManager: React.FC = () => {
   const { theme } = useTheme();
@@ -90,7 +82,7 @@ const ImageManager: React.FC = () => {
         <img
           src={url}
           alt="ảnh"
-          className="rounded-md border border-gray-300 dark:border-gray-600 p-1 w-[100px] bg-white dark:bg-gray-700"
+          className="rounded-md border border-gray-300 dark:border-gray-600 p-1 w-[100px] bg-white dark:bg-gray-700 shadow-sm"
         />
       ),
     },
@@ -106,32 +98,25 @@ const ImageManager: React.FC = () => {
       title: 'Action',
       render: (record: ImageDto) => (
         <Space>
-          <Button
+          <CustomButton
+            variant="update"
+            label="Update"
             onClick={() => {
               form.setFieldsValue(record);
               setModalVisible(true);
             }}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            Update
-          </Button>
-          <Popconfirm
-            title="Confirm delete?"
+            loading={loading}
+          />
+          <CustomButton
+            variant="delete"
+            label="Delete"
+            loading={loading}
             onConfirm={() => deleteImage(record.id)}
-          >
-            <Button
-              danger
-              className={`
-                custom-button
-                ${theme === 'dark' ? 'custom-button-danger-dark' : 'custom-button-danger-light'}
-              `}
-            >
-              Delete
-            </Button>
-          </Popconfirm>
+            confirmCancelText="Cancel"
+            confirmOkText="Delete"
+            confirmTitle=""
+            confirmMessage="Confirm delete?"
+          />
         </Space>
       ),
     },
@@ -141,25 +126,32 @@ const ImageManager: React.FC = () => {
     <div
       className={`
         min-h-screen p-4 transition-colors duration-300
-        ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}
+        ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}
       `}
     >
       <Card
-        title="IMAGE MANAGER"
-        extra={
-          <Button
-            onClick={() => setModalVisible(true)}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
+        title={
+          <div
+            className={`text-lg font-semibold transition-colors duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}
           >
-            ADD IMAGE
-          </Button>
+            IMAGE MANAGER
+          </div>
+        }
+        extra={
+          <CustomButton
+            variant="primary"
+            label="Add Image"
+            onClick={() => {
+              form.resetFields();
+              setModalVisible(true);
+            }}
+          />
         }
         className={`
-          transition-colors duration-300
-          ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}
+          shadow-md transition-colors duration-300
+          ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}
         `}
       >
         <Table
@@ -167,41 +159,35 @@ const ImageManager: React.FC = () => {
           rowKey="id"
           columns={columns}
           pagination={false}
+          className="table-hover-effect"
         />
       </Card>
 
       <Modal
-        title={form.getFieldValue('id') ? 'Update Image' : 'Add Image'}
+        title={
+          <div
+            className={`text-lg font-semibold transition-colors duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}
+          >
+            {form.getFieldValue('id') ? 'Update Image' : 'Add Image'}
+          </div>
+        }
         open={isModalVisible}
         onOk={onSubmit}
         onCancel={onCancel}
         okText={form.getFieldValue('id') ? 'Update' : 'Add'}
         cancelText="Cancel"
         confirmLoading={loading}
-        className={theme === 'dark' ? 'dark-modal' : ''}
+        className={`custom-modal ${theme === 'dark' ? 'dark-modal' : ''}`}
         footer={[
-          <Button
-            key="cancel"
-            onClick={onCancel}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-light' : 'custom-button-dark'}
-            `}
-          >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
+          <CustomButton variant="cancel" label="Cancel" onClick={() => onCancel} />,
+          <CustomButton
+            variant="secondary"
+            label={form.getFieldValue('id') ? 'Update' : 'Add'}
+            onClick={() => onSubmit}
             loading={loading}
-            onClick={onSubmit}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            {form.getFieldValue('id') ? 'Update' : 'Add'}
-          </Button>,
+          />,
         ]}
       >
         <Form form={form} layout="vertical">
@@ -213,19 +199,19 @@ const ImageManager: React.FC = () => {
           >
             <Input
               placeholder="Enter image URL"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
+              className={theme === 'dark' ? 'bg-gray-700 text-white' : ''}
             />
           </Form.Item>
           <Form.Item label="Tag Name" name="tag">
             <Input
               placeholder="Enter tag name"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
+              className={theme === 'dark' ? 'bg-gray-700 text-white' : ''}
             />
           </Form.Item>
           <Form.Item label="Image Type" name="type">
             <Input
               placeholder="Enter image type"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
+              className={theme === 'dark' ? 'bg-gray-700 text-white' : ''}
             />
           </Form.Item>
         </Form>

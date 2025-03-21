@@ -1,21 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  message,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-} from 'antd';
-import { ImageDto, PhilosophyDto } from '../../../types/Dto';
+import { Button, Card, Form, Input, message, Modal, Space, Table } from 'antd';
+import { PhilosophyDto } from '../../../types/Dto';
 import { HTTP_OK } from '../../../constants/common';
 import { useTheme } from '../../contexts/theme-context';
 import { PhilosoPhyApi } from '../../../service/PhilosophyApi';
+import CustomButton from '@/page/components/common/custom-button';
 
-const ImageManager: React.FC = () => {
+const PhilosophyManager: React.FC = () => {
   const { theme } = useTheme();
 
   const [philosophies, setPhilosophies] = useState<PhilosophyDto[]>([]);
@@ -93,34 +84,27 @@ const ImageManager: React.FC = () => {
     },
     {
       title: 'Action',
-      render: (record: ImageDto) => (
+      render: (record: PhilosophyDto) => (
         <Space>
-          <Button
+          <CustomButton
+            variant="update"
+            label="Update"
             onClick={() => {
               form.setFieldsValue(record);
               setModalVisible(true);
             }}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            Update
-          </Button>
-          <Popconfirm
-            title="Confirm delete?"
+            loading={loading}
+          />
+          <CustomButton
+            variant="delete"
+            label="Delete"
+            loading={loading}
             onConfirm={() => deletePhilosophy(record.id)}
-          >
-            <Button
-              danger
-              className={`
-                custom-button
-                ${theme === 'dark' ? 'custom-button-danger-dark' : 'custom-button-danger-light'}
-              `}
-            >
-              Delete
-            </Button>
-          </Popconfirm>
+            confirmCancelText="Cancel"
+            confirmOkText="Delete"
+            confirmTitle=""
+            confirmMessage="Confirm delete?"
+          />
         </Space>
       ),
     },
@@ -134,7 +118,15 @@ const ImageManager: React.FC = () => {
       `}
     >
       <Card
-        title="PHILOSOPHY MANAGER"
+        title={
+          <div
+            className={`text-lg font-semibold transition-colors duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}
+          >
+            PHILOSOPHY MANAGER
+          </div>
+        }
         extra={
           <Button
             onClick={() => setModalVisible(true)}
@@ -143,7 +135,7 @@ const ImageManager: React.FC = () => {
               ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
             `}
           >
-            ADD IMAGE
+            ADD PHILOSOPHY
           </Button>
         }
         className={`
@@ -161,7 +153,15 @@ const ImageManager: React.FC = () => {
       </Card>
 
       <Modal
-        title={form.getFieldValue('id') ? 'Update Image' : 'Add Image'}
+        title={
+          <div
+            className={`text-lg font-semibold transition-colors duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}
+          >
+            {form.getFieldValue('id') ? 'Update Philosophy' : 'Add Philosophy'}
+          </div>
+        }
         open={isModalVisible}
         onOk={onSubmit}
         onCancel={onCancel}
@@ -197,24 +197,18 @@ const ImageManager: React.FC = () => {
         <Form form={form} layout="vertical">
           <Form.Item hidden name="id" />
           <Form.Item
-            label="Image URL"
-            name="url"
-            rules={[{ required: true, message: 'Please enter image URL!' }]}
+            label="Content"
+            name="content"
+            rules={[{ required: true, message: 'Please enter content!' }]}
           >
             <Input
-              placeholder="Enter image URL"
+              placeholder="Enter content"
               className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
             />
           </Form.Item>
-          <Form.Item label="Tag Name" name="tag">
+          <Form.Item label="Author" name="author">
             <Input
-              placeholder="Enter tag name"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
-            />
-          </Form.Item>
-          <Form.Item label="Image Type" name="type">
-            <Input
-              placeholder="Enter image type"
+              placeholder="Enter author"
               className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
             />
           </Form.Item>
@@ -224,4 +218,4 @@ const ImageManager: React.FC = () => {
   );
 };
 
-export default ImageManager;
+export default PhilosophyManager;
