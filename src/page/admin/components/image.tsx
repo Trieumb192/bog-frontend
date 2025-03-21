@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Card, Form, Input, message, Modal, Popconfirm, Space, Table } from 'antd';
+import { Card, Form, Input, message, Modal, Space, Table } from 'antd';
 import { ImageDto } from '../../../types/Dto';
 import { ImageApi } from '../../../service/ImageApi';
 import { HTTP_OK } from '../../../constants/common';
 import { useTheme } from '../../contexts/theme-context';
-import "../style.css";
+import '../style.css';
+import CustomButton from '@/page/components/common/custom-button';
 
 const ImageManager: React.FC = () => {
   const { theme } = useTheme();
@@ -97,29 +98,25 @@ const ImageManager: React.FC = () => {
       title: 'Action',
       render: (record: ImageDto) => (
         <Space>
-          <Button
+          <CustomButton
+            variant="update"
+            label="Update"
             onClick={() => {
               form.setFieldsValue(record);
               setModalVisible(true);
             }}
-            className={`
-              custom-button 
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            Update
-          </Button>
-          <Popconfirm title="Confirm delete?" onConfirm={() => deleteImage(record.id)}>
-            <Button
-              danger
-              className={`
-                custom-button 
-                ${theme === 'dark' ? 'custom-button-danger-dark' : 'custom-button-danger-light'}
-              `}
-            >
-              Delete
-            </Button>
-          </Popconfirm>
+            loading={loading}
+          />
+          <CustomButton
+            variant="delete"
+            label="Delete"
+            loading={loading}
+            onConfirm={() => deleteImage(record.id)}
+            confirmCancelText="Cancel"
+            confirmOkText="Delete"
+            confirmTitle=""
+            confirmMessage="Confirm delete?"
+          />
         </Space>
       ),
     },
@@ -133,20 +130,24 @@ const ImageManager: React.FC = () => {
       `}
     >
       <Card
-        title="🖼️ IMAGE MANAGER"
+        title={
+          <div
+            className={`text-lg font-semibold transition-colors duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}
+          >
+            IMAGE MANAGER
+          </div>
+        }
         extra={
-          <Button
+          <CustomButton
+            variant="primary"
+            label="Add Image"
             onClick={() => {
               form.resetFields();
               setModalVisible(true);
             }}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            ➕ ADD IMAGE
-          </Button>
+          />
         }
         className={`
           shadow-md transition-colors duration-300
@@ -163,7 +164,15 @@ const ImageManager: React.FC = () => {
       </Card>
 
       <Modal
-        title={form.getFieldValue('id') ? '📝 Update Image' : '➕ Add Image'}
+        title={
+          <div
+            className={`text-lg font-semibold transition-colors duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}
+          >
+            {form.getFieldValue('id') ? 'Update Image' : 'Add Image'}
+          </div>
+        }
         open={isModalVisible}
         onOk={onSubmit}
         onCancel={onCancel}
@@ -172,28 +181,13 @@ const ImageManager: React.FC = () => {
         confirmLoading={loading}
         className={`custom-modal ${theme === 'dark' ? 'dark-modal' : ''}`}
         footer={[
-          <Button
-            key="cancel"
-            onClick={onCancel}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-light' : 'custom-button-dark'}
-            `}
-          >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
+          <CustomButton variant="cancel" label="Cancel" onClick={() => onCancel} />,
+          <CustomButton
+            variant="secondary"
+            label={form.getFieldValue('id') ? 'Update' : 'Add'}
+            onClick={() => onSubmit}
             loading={loading}
-            onClick={onSubmit}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            {form.getFieldValue('id') ? 'Update' : 'Add'}
-          </Button>,
+          />,
         ]}
       >
         <Form form={form} layout="vertical">

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Modal, Tabs, Form, Input, Button, message } from 'antd';
+import { Modal, Tabs, Form, Input, message } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { UserDto } from '../../types/User';
 import { UserApi } from '../../service/UserApi';
 import { HTTP_OK } from '../../constants/common';
 import { useAuth } from '../contexts/auth-context';
+import CustomButton from './common/custom-button';
 
 const { TabPane } = Tabs;
 
@@ -23,7 +24,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      message.success(`Chào mừng ${request.fullName}!`);
+      message.success(`Wellcome ${request.fullName}!`);
       login(request);
       onClose();
     }, 1000);
@@ -57,7 +58,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
     >
       <Tabs defaultActiveKey="1" centered>
         {/* Login Tab */}
-        <TabPane tab="Đăng nhập" key="1">
+        <TabPane tab="LOGIN" key="1">
           <Form
             name="login"
             onFinish={handleLogin}
@@ -68,7 +69,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
             <Form.Item
               name="email"
               label="Email"
-              rules={[{ required: true, message: 'Please enter password!' }]}
+              rules={[{ required: true, message: 'Please enter email!' }]}
             >
               <Input prefix={<MailOutlined />} placeholder="Enter email" />
             </Form.Item>
@@ -80,21 +81,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
               <Input.Password prefix={<LockOutlined />} placeholder="Enter password" />
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={loading}
-                block
-                className="rounded-lg"
-              >
-                Đăng nhập
-              </Button>
+              <CustomButton variant="primary" label="Login" type="submit" loading={loading}/>
             </Form.Item>
           </Form>
         </TabPane>
 
         {/* Register Tab */}
-        <TabPane tab="Đăng ký" key="2">
+        <TabPane tab="REGISTER" key="2">
           <Form
             name="register"
             onFinish={handleRegister}
@@ -104,34 +97,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
             <Form.Item
               name="email"
               label="Email"
-              rules={[{ required: true, type: 'email', message: 'Nhập email hợp lệ!' }]}
+              rules={[{ required: true, type: 'email', message: 'Please enter email!' }]}
             >
               <Input prefix={<MailOutlined />} placeholder="Email" />
             </Form.Item>
             <Form.Item
               name="password"
-              label="Mật khẩu"
-              rules={[{ required: true, message: 'Nhập mật khẩu!' }]}
+              label="Password"
+              rules={[{ required: true, message: 'Please enter password!' }]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="Mật khẩu" />
+              <Input.Password prefix={<LockOutlined />} placeholder="Password" />
             </Form.Item>
             <Form.Item
               name="fullName"
-              label="Name"
+              label="FulName"
               rules={[{ required: true, message: 'Please enter fullname!' }]}
             >
-              <Input prefix={<UserOutlined />} placeholder="Enter fullname" />
+              <Input prefix={<UserOutlined />} placeholder="Fullname" />
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={loading}
-                block
-                className="rounded-lg"
-              >
-                Đăng ký
-              </Button>
+              <CustomButton variant="primary" label="Register" type="submit" loading={loading}/>
             </Form.Item>
           </Form>
         </TabPane>
