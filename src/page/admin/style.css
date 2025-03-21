@@ -1,68 +1,83 @@
-
-  /* Button Styles */
-.custom-button {
-  border-radius: 6px;
-  padding: 4px 16px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.custom-button-light {
-  background-color: #1890ff;
-  color: white;
-  border: none;
-}
-
-.custom-button-light:hover {
-  background-color: #40a9ff;
-}
-
-.custom-button-dark {
-  background-color: #1e293b; /* slate-800 */
-  color: #e2e8f0; /* gray-200 */
-  border: 1px solid #475569; /* slate-600 */
-}
-
-.custom-button-dark:hover {
-  background-color: #334155; /* slate-700 */
-}
-
-/* Danger button */
-.custom-button-danger-light {
-  background-color: #ff4d4f;
-  color: white;
-}
-
-.custom-button-danger-light:hover {
-  background-color: #ff7875;
-}
-
-.custom-button-danger-dark {
-  background-color: #7f1d1d; /* dark red */
-  color: #fca5a5;
-  border: 1px solid #ef4444;
-}
-
-.custom-button-danger-dark:hover {
-  background-color: #991b1b;
-}
-
-/* Modal dark theme */
+/* Modal Dark Theme */
 .dark-modal .ant-modal-content {
-  background-color: #1f2937;
-  color: white;
+  background-color: #1f2937; /* slate-800 */
+  color: #f9fafb; /* gray-50 */
 }
 
 .dark-modal .ant-modal-header {
-  background-color: #1f2937;
-  border-bottom: 1px solid #374151;
+  background-color: #111827; /* slate-900 */
+  border-bottom: 1px solid #374151; /* slate-700 */
 }
 
 .dark-modal .ant-modal-footer {
-  border-top: 1px solid #374151;
+  border-top: 1px solid #374151; /* slate-700 */
 }
 
 /* Table row hover effect */
 .table-hover-effect .ant-table-tbody > tr:hover > td {
-  background: rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
+  background: rgba(96, 165, 250, 0.1); /* blue-400 with opacity */
 }
+
+/* Modal Light Theme */
+.light-modal .ant-modal-content {
+  background-color: #ffffff; /* white */
+  color: #111827; /* slate-900 */
+}
+
+.light-modal .ant-modal-header {
+  background-color: #f9fafb; /* gray-50 */
+  border-bottom: 1px solid #e5e7eb; /* gray-200 */
+}
+
+.light-modal .ant-modal-footer {
+  border-top: 1px solid #e5e7eb; /* gray-200 */
+}
+
+/* Table row hover effect for light theme */
+.light-modal .ant-table-tbody > tr:hover > td {
+  background: rgba(59, 130, 246, 0.05); /* blue-500 with less opacity */
+}
+
+/* Common form item label */
+.dark-form .ant-form-item-label > label {
+  color: #f9fafb; /* gray-50 */
+}
+
+.light-form .ant-form-item-label > label {
+  color: #111827; /* slate-900 */
+}
+
+/* Input fields */
+.dark-form .ant-input {
+  background-color: #374151; /* slate-700 */
+  color: #f9fafb; /* gray-50 */
+  border: 1px solid #4b5563; /* slate-600 */
+}
+
+.dark-form .ant-input::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+.light-form .ant-input {
+  background-color: #ffffff; /* white */
+  color: #111827; /* slate-900 */
+  border: 1px solid #d1d5db; /* gray-300 */
+}
+
+.light-form .ant-input::placeholder {
+  color: #6b7280; /* gray-500 */
+}
+
+/* Focused input for both themes */
+.dark-form .ant-input:focus, 
+.dark-form .ant-input-focused {
+  border-color: #3b82f6; /* blue-500 */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.light-form .ant-input:focus, 
+.light-form .ant-input-focused {
+  border-color: #3b82f6; /* blue-500 */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
