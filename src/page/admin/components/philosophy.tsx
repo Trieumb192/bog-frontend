@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Card, Form, Input, message, Modal, Space, Table } from 'antd';
+import { Card, Form, Input, message, Modal, Space } from 'antd';
+import ProTable, {ProColumns} from "@ant-design/pro-table";
 import { PhilosophyDto } from '../../../types/Dto';
 import { HTTP_OK } from '../../../constants/common';
 import { useTheme } from '../../contexts/theme-context';
@@ -73,7 +74,7 @@ const PhilosophyManager: React.FC = () => {
     setModalVisible(false);
   }, [form]);
 
-  const columns = [
+  const columns: Array<ProColumns<PhilosophyDto>> = [
     {
       title: 'Content',
       dataIndex: 'content',
@@ -81,10 +82,12 @@ const PhilosophyManager: React.FC = () => {
     {
       title: 'Author',
       dataIndex: 'author',
+      align: "center",
     },
     {
       title: 'Action',
-      render: (record: PhilosophyDto) => (
+      align: "center",
+      render: (_v, record: PhilosophyDto) => (
         <Space>
           <CustomButton
             variant="update"
@@ -98,6 +101,7 @@ const PhilosophyManager: React.FC = () => {
           <CustomButton
             variant="delete"
             label="Delete"
+            confirm
             loading={loading}
             onConfirm={() => deletePhilosophy(record.id)}
             confirmCancelText="Cancel"
@@ -128,22 +132,21 @@ const PhilosophyManager: React.FC = () => {
           </div>
         }
         extra={
-          <Button
-            onClick={() => setModalVisible(true)}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            ADD PHILOSOPHY
-          </Button>
+          <CustomButton
+            variant="primary"
+            label="Add Philosophy"
+            onClick={() => {
+              form.resetFields();
+              setModalVisible(true);
+            }}
+          />
         }
         className={`
           transition-colors duration-300
           ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}
         `}
       >
-        <Table
+        <ProTable
           dataSource={philosophies}
           rowKey="id"
           columns={columns}
@@ -168,33 +171,20 @@ const PhilosophyManager: React.FC = () => {
         okText={form.getFieldValue('id') ? 'Update' : 'Add'}
         cancelText="Cancel"
         confirmLoading={loading}
-        className={theme === 'dark' ? 'dark-modal' : ''}
+        className={theme === 'dark' ? 'dark-modal' : 'light-modal'}
         footer={[
-          <Button
-            key="cancel"
-            onClick={onCancel}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-light' : 'custom-button-dark'}
-            `}
-          >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={onSubmit}
-            className={`
-              custom-button
-              ${theme === 'dark' ? 'custom-button-dark' : 'custom-button-light'}
-            `}
-          >
-            {form.getFieldValue('id') ? 'Update' : 'Add'}
-          </Button>,
+          <Space direction="horizontal" className="pt-4">
+            <CustomButton variant="cancel" label="Cancel" onClick={() => onCancel()} />
+            <CustomButton
+              variant="secondary"
+              label={form.getFieldValue('id') ? 'Update' : 'Add'}
+              onClick={() => onSubmit}
+              loading={loading}
+            />
+          </Space>,
         ]}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} layout="vertical" className={theme === 'dark' ? 'dark-form' : 'light-form'}>
           <Form.Item hidden name="id" />
           <Form.Item
             label="Content"
@@ -202,14 +192,12 @@ const PhilosophyManager: React.FC = () => {
             rules={[{ required: true, message: 'Please enter content!' }]}
           >
             <Input
-              placeholder="Enter content"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
+              placeholder="Enter content" 
             />
           </Form.Item>
           <Form.Item label="Author" name="author">
             <Input
               placeholder="Enter author"
-              className={theme === 'dark' ? 'bg-gray-800 text-white' : ''}
             />
           </Form.Item>
         </Form>

@@ -12,27 +12,3 @@
     box-shadow: 0 0 5px #ff0090, 0 0 15px #ff0090;
 }
 
-/* Base button style */
-.custom-button {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-300;
-}
-
-/* Light Mode */
-.custom-button-light {
-    @apply bg-white text-gray-800 border border-gray-300 hover:bg-gray-100;
-}
-
-/* Dark Mode */
-.custom-button-dark {
-    @apply bg-gray-700 text-white border border-gray-600 hover:bg-gray-600;
-}
-
-/* Danger Buttons (Light Theme) */
-.custom-button-danger-light {
-    @apply bg-red-500 text-white hover:bg-red-600;
-}
-
-/* Danger Buttons (Dark Theme) */
-.custom-button-danger-dark {
-    @apply bg-red-600 text-white hover:bg-red-700;
-}

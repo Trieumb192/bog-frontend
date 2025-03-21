@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Card, Form, Input, message, Modal, Space, Table } from 'antd';
+import { Card, Form, Input, message, Modal, Space } from 'antd';
+import ProTable, {ProColumns} from "@ant-design/pro-table";
 import { ImageDto } from '../../../types/Dto';
 import { ImageApi } from '../../../service/ImageApi';
 import { HTTP_OK } from '../../../constants/common';
@@ -74,13 +75,13 @@ const ImageManager: React.FC = () => {
     setModalVisible(false);
   }, [form]);
 
-  const columns = [
+  const columns: Array<ProColumns<ImageDto>> = [
     {
       title: '',
       dataIndex: 'url',
-      render: (url: string) => (
+      render: (_v, record: ImageDto) => (
         <img
-          src={url}
+          src={record.url}
           alt="ảnh"
           className="rounded-md border border-gray-300 dark:border-gray-600 p-1 w-[100px] bg-white dark:bg-gray-700 shadow-sm"
         />
@@ -89,18 +90,22 @@ const ImageManager: React.FC = () => {
     {
       title: 'Tag',
       dataIndex: 'tag',
+      align: "center"
     },
     {
       title: 'Type',
       dataIndex: 'type',
+      align: "center"
     },
     {
       title: 'Action',
-      render: (record: ImageDto) => (
+      align: "center",
+      render: (_v, record: ImageDto) => (
         <Space>
           <CustomButton
             variant="update"
             label="Update"
+            confirm={false}
             onClick={() => {
               form.setFieldsValue(record);
               setModalVisible(true);
@@ -111,6 +116,7 @@ const ImageManager: React.FC = () => {
             variant="delete"
             label="Delete"
             loading={loading}
+            confirm
             onConfirm={() => deleteImage(record.id)}
             confirmCancelText="Cancel"
             confirmOkText="Delete"
@@ -154,7 +160,7 @@ const ImageManager: React.FC = () => {
           ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}
         `}
       >
-        <Table
+        <ProTable
           dataSource={images}
           rowKey="id"
           columns={columns}
@@ -173,46 +179,47 @@ const ImageManager: React.FC = () => {
             {form.getFieldValue('id') ? 'Update Image' : 'Add Image'}
           </div>
         }
+        closeIcon={false}
         open={isModalVisible}
         onOk={onSubmit}
         onCancel={onCancel}
         okText={form.getFieldValue('id') ? 'Update' : 'Add'}
         cancelText="Cancel"
         confirmLoading={loading}
-        className={`custom-modal ${theme === 'dark' ? 'dark-modal' : ''}`}
+        className={`custom-modal ${theme === 'dark' ? 'dark-modal' : 'light-modal'}`}
         footer={[
-          <CustomButton variant="cancel" label="Cancel" onClick={() => onCancel} />,
-          <CustomButton
-            variant="secondary"
-            label={form.getFieldValue('id') ? 'Update' : 'Add'}
-            onClick={() => onSubmit}
-            loading={loading}
-          />,
+          <Space direction="horizontal" className="pt-4">
+            <CustomButton variant="cancel" label="Cancel" onClick={() => onCancel()} />
+            <CustomButton
+              variant="secondary"
+              label={form.getFieldValue('id') ? 'Update' : 'Add'}
+              onClick={() => onSubmit}
+              loading={loading}
+            />
+          </Space>,
         ]}
       >
-        <Form form={form} layout="vertical">
+        <Form
+          form={form}
+          layout="vertical"
+          className={theme === 'dark' ? 'dark-form' : 'light-form'}
+        >
           <Form.Item hidden name="id" />
+
           <Form.Item
             label="Image URL"
             name="url"
             rules={[{ required: true, message: 'Please enter image URL!' }]}
           >
-            <Input
-              placeholder="Enter image URL"
-              className={theme === 'dark' ? 'bg-gray-700 text-white' : ''}
-            />
+            <Input placeholder="Enter image URL" />
           </Form.Item>
+
           <Form.Item label="Tag Name" name="tag">
-            <Input
-              placeholder="Enter tag name"
-              className={theme === 'dark' ? 'bg-gray-700 text-white' : ''}
-            />
+            <Input placeholder="Enter tag name" />
           </Form.Item>
+
           <Form.Item label="Image Type" name="type">
-            <Input
-              placeholder="Enter image type"
-              className={theme === 'dark' ? 'bg-gray-700 text-white' : ''}
-            />
+            <Input placeholder="Enter image type" />
           </Form.Item>
         </Form>
       </Modal>

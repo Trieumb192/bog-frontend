@@ -1,4 +1,4 @@
-export const BASE_URL_BLOG = 'https://blog-backend-production-4962.up.railway.app' + '/blog';
+export const BASE_URL_BLOG = 'http://localhost:8080' + '/blog';
 
 export const BASE_URL_POST = '/post';
 export const BASE_URL_IMAGE = '/image';

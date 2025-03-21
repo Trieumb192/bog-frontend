@@ -38,7 +38,7 @@ const ManagePage: React.FC = () => {
               </h1>
             }
             headStyle={{
-              backgroundColor: theme === 'dark' ? '#1f2937' : '#FCD3C2', // darker bg in dark theme
+              backgroundColor: theme === 'dark' ? '#1f2937' : '#FCD3C2',
             }}
             bodyStyle={{
               padding: 0,

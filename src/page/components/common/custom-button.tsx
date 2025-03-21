@@ -7,9 +7,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter
+  DialogFooter,
 } from '@/components/ui/dialog';
-import { Loader2, Save, Edit2, Trash2, X, Link } from 'lucide-react';
+import { Loader2, Save, Edit2, Trash2, Link } from 'lucide-react';
 import { useTheme } from '../../contexts/theme-context';
 import { cn } from '@/lib/utils';
 
@@ -48,38 +48,56 @@ interface CustomButtonProps {
   fullWidth?: boolean;
 }
 
-const buttonVariants = {
+const getButtonVariants = (theme: string) => ({
   primary: {
-    className: 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md',
+    className:
+      theme === 'dark'
+        ? 'bg-indigo-500 hover:bg-indigo-600 text-white shadow-md'
+        : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md',
     label: 'Primary',
     defaultLeftIcon: null,
   },
   secondary: {
-    className: 'bg-gray-300 hover:bg-gray-400 text-black shadow-md dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white',
+    className:
+      theme === 'dark'
+        ? 'bg-gray-700 hover:bg-gray-600 text-white shadow-md'
+        : 'bg-gray-300 hover:bg-gray-400 text-black shadow-md',
     label: 'Secondary',
     defaultLeftIcon: null,
   },
   save: {
-    className: 'bg-green-600 hover:bg-green-700 text-white shadow-lg',
+    className:
+      theme === 'dark'
+        ? 'bg-green-500 hover:bg-green-600 text-white shadow-lg'
+        : 'bg-green-600 hover:bg-green-700 text-white shadow-lg',
     label: 'Save',
-    defaultLeftIcon: <Save />
+    defaultLeftIcon: <Save />,
   },
   update: {
-    className: 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg',
+    className:
+      theme === 'dark'
+        ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-lg'
+        : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg',
     label: 'Update',
-    defaultLeftIcon: <Edit2 />
+    defaultLeftIcon: <Edit2 />,
   },
   delete: {
-    className: 'bg-red-600 hover:bg-red-700 text-white shadow-lg',
+    className:
+      theme === 'dark'
+        ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg'
+        : 'bg-red-600 hover:bg-red-700 text-white shadow-lg',
     label: 'Delete',
-    defaultLeftIcon: <Trash2 />
+    defaultLeftIcon: <Trash2 />,
   },
   cancel: {
-    className: 'bg-gray-600 hover:bg-gray-700 text-white shadow-md',
+    className:
+      theme === 'dark'
+        ? 'bg-gray-500 hover:bg-gray-600 text-white shadow-md'
+        : 'bg-gray-600 hover:bg-gray-700 text-white shadow-md',
     label: 'Cancel',
-    defaultLeftIcon: <X />
-  }
-};
+    defaultLeftIcon: null,
+  },
+});
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   variant = 'primary',
@@ -108,7 +126,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   target,
 
   size = 'md',
-  fullWidth = false
+  fullWidth = false,
 }) => {
   const { theme } = useTheme();
   const [showConfirm, setShowConfirm] = useState(false);
@@ -130,12 +148,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     setShowConfirm(false);
   };
 
-  const { className: variantClass, label: defaultLabel, defaultLeftIcon } = buttonVariants[variant];
+  const variants = getButtonVariants(theme);
+  const { className: variantClass, label: defaultLabel, defaultLeftIcon } = variants[variant];
 
   const buttonSizeClass = {
     sm: 'px-3 py-1 text-xs',
     md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base'
+    lg: 'px-6 py-3 text-base',
   }[size];
 
   const renderIcon = (icon: ReactNode) => {
@@ -143,7 +162,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const iconElement = icon as ReactElement<any>;
     return cloneElement(iconElement, {
-      className: cn(iconElement.props.className, `w-[${iconSize}px] h-[${iconSize}px]`)
+      className: cn(iconElement.props.className, `w-[${iconSize}px] h-[${iconSize}px]`),
     });
   };
 
@@ -153,7 +172,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       onClick={handleClick}
       disabled={disabled || loading}
       className={cn(
-        'flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200',
+        'flex items-center justify-center rounded-xl gap-2 font-medium transition-all duration-200',
         buttonSizeClass,
         variantClass,
         disabled && 'opacity-50 cursor-not-allowed',
@@ -185,38 +204,35 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   ) : (
     buttonWithLink
   );
-  
 
   return (
     <>
-      <Dialog open={showConfirm} onOpenChange={setShowConfirm}>
-        <DialogTrigger asChild>{buttonWithTooltip}</DialogTrigger>
-        <DialogContent
-          className={cn(
-            'rounded-lg',
-            theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white'
-          )}
-        >
-          <DialogHeader>
-            <DialogTitle className="text-xl">{confirmTitle}</DialogTitle>
-          </DialogHeader>
-          <div className="text-sm">{confirmMessage}</div>
-          <DialogFooter className="gap-2">
-            <ShadButton
-              variant="outline"
-              onClick={() => setShowConfirm(false)}
-            >
-              {confirmCancelText}
-            </ShadButton>
-            <ShadButton
-              className="bg-red-600 hover:bg-red-700 text-white"
-              onClick={confirmAction}
-            >
-              {confirmOkText}
-            </ShadButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {confirm ? (
+        <Dialog open={showConfirm} onOpenChange={setShowConfirm}>
+          <DialogTrigger asChild>{buttonWithTooltip}</DialogTrigger>
+          <DialogContent
+            className={cn('rounded-lg', theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white')}
+          >
+            <DialogHeader>
+              <DialogTitle className="text-xl">{confirmTitle}</DialogTitle>
+            </DialogHeader>
+            <div className="text-sm">{confirmMessage}</div>
+            <DialogFooter className="gap-2">
+              <ShadButton variant="outline" onClick={() => setShowConfirm(false)}>
+                {confirmCancelText}
+              </ShadButton>
+              <ShadButton
+                className="bg-red-600 hover:bg-red-700 text-white"
+                onClick={confirmAction}
+              >
+                {confirmOkText}
+              </ShadButton>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      ) : (
+        buttonWithTooltip
+      )}
     </>
   );
 };
