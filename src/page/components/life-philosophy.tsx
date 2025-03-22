@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from 'antd';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { useTheme } from '../contexts/theme-context';
 import { PhilosophyDto } from '../../types/Dto';
 
 interface LifePhilosophyProps {
-    philosophies: PhilosophyDto[];
+  philosophies: PhilosophyDto[];
 }
 const LifePhilosophy: React.FC<LifePhilosophyProps> = ({ philosophies }) => {
   const { theme } = useTheme();
@@ -27,15 +27,14 @@ const LifePhilosophy: React.FC<LifePhilosophyProps> = ({ philosophies }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       handleNext();
-      
     }, 5000);
     return () => clearInterval(timer);
   }, [handleNext]);
 
   return (
     <div
-      className={`relative w-full h-[360px] flex flex-col justify-center items-center text-center px-4 transition-colors duration-500 ${
-        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'
+      className={`relative w-full h-[360px] flex flex-col justify-center items-center text-center px-4 transition-colors duration-500 $${
+        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
       }`}
     >
       <AnimatePresence mode="wait">
@@ -51,29 +50,36 @@ const LifePhilosophy: React.FC<LifePhilosophyProps> = ({ philosophies }) => {
             “{content}”
           </p>
 
-          <div className="text-base md:text-lg font-medium opacity-80">
-            — {author}
-          </div>
+          <div className="text-base md:text-lg font-medium opacity-80">{author}</div>
         </motion.div>
       </AnimatePresence>
 
       {/* Buttons Next/Prev */}
       <div className="flex space-x-4 mt-8">
         <Button
-          type="default"
           shape="circle"
-          icon={<ArrowLeftOutlined />}
           onClick={handlePrev}
+          className={`flex items-center justify-center border transition duration-300 ${
+            theme === 'dark'
+              ? 'bg-gray-800 border-gray-600 text-white hover:bg-gray-700'
+              : 'bg-white border-gray-300 text-gray-800 hover:bg-gray-100'
+          }`}
+          icon={<LeftOutlined />}
         />
+
         <Button
-          type="default"
           shape="circle"
-          icon={<ArrowRightOutlined />}
           onClick={handleNext}
+          className={`flex items-center justify-center border transition duration-300 ${
+            theme === 'dark'
+              ? 'bg-gray-800 border-gray-600 text-white hover:bg-gray-700'
+              : 'bg-white border-gray-300 text-gray-800 hover:bg-gray-100'
+          }`}
+          icon={<RightOutlined />}
         />
       </div>
 
-      {/* Indicators */}
+      {/* Indicators
       <div className="absolute bottom-4 flex space-x-2">
         {philosophies.map((p: PhilosophyDto, idx: number) => (
           <div
@@ -87,7 +93,7 @@ const LifePhilosophy: React.FC<LifePhilosophyProps> = ({ philosophies }) => {
             }`}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

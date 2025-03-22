@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Card, Form, Input, message, Modal, Space } from 'antd';
-import ProTable, {ProColumns} from "@ant-design/pro-table";
+import { Card, Form, Input, message, Modal, Space, Table, TableColumnProps } from 'antd';
 import { ImageDto } from '../../../types/Dto';
 import { ImageApi } from '../../../service/ImageApi';
-import { HTTP_OK } from '../../../constants/common';
+import { DEFAULT_PAGE_SIZE, HTTP_OK, PAGE_SIZE_OPTION } from '../../../constants/common';
 import { useTheme } from '../../contexts/theme-context';
 import '../style.css';
 import CustomButton from '@/page/components/common/custom-button';
@@ -75,13 +74,13 @@ const ImageManager: React.FC = () => {
     setModalVisible(false);
   }, [form]);
 
-  const columns: Array<ProColumns<ImageDto>> = [
+  const columns: Array<TableColumnProps<ImageDto>> = [
     {
       title: '',
       dataIndex: 'url',
-      render: (_v, record: ImageDto) => (
+      render: (url: string) => (
         <img
-          src={record.url}
+          src={url}
           alt="ảnh"
           className="rounded-md border border-gray-300 dark:border-gray-600 p-1 w-[100px] bg-white dark:bg-gray-700 shadow-sm"
         />
@@ -90,16 +89,16 @@ const ImageManager: React.FC = () => {
     {
       title: 'Tag',
       dataIndex: 'tag',
-      align: "center"
+      align: 'center',
     },
     {
       title: 'Type',
       dataIndex: 'type',
-      align: "center"
+      align: 'center',
     },
     {
       title: 'Action',
-      align: "center",
+      align: 'center',
       render: (_v, record: ImageDto) => (
         <Space>
           <CustomButton
@@ -160,12 +159,20 @@ const ImageManager: React.FC = () => {
           ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}
         `}
       >
-        <ProTable
+        <Table
           dataSource={images}
           rowKey="id"
           columns={columns}
-          pagination={false}
           className="table-hover-effect"
+          size="small"
+          pagination={{
+            defaultPageSize: DEFAULT_PAGE_SIZE,
+            showSizeChanger: true,
+            pageSizeOptions: PAGE_SIZE_OPTION,
+            showTotal: (total, range) => (
+              <div>{`${range[0]}-${range[1]} / Total record : ${total}`}</div>
+            ),
+          }}
         />
       </Card>
 
@@ -193,7 +200,7 @@ const ImageManager: React.FC = () => {
             <CustomButton
               variant="secondary"
               label={form.getFieldValue('id') ? 'Update' : 'Add'}
-              onClick={() => onSubmit}
+              onClick={() => onSubmit()}
               loading={loading}
             />
           </Space>,
