@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Card, Form, Input, message, Modal, Space } from 'antd';
-import ProTable, {ProColumns} from "@ant-design/pro-table";
+import { Card, Form, Input, message, Modal, Space, TableColumnProps, Table } from 'antd';
 import { PhilosophyDto } from '../../../types/Dto';
-import { HTTP_OK } from '../../../constants/common';
+import { DEFAULT_PAGE_SIZE, HTTP_OK, PAGE_SIZE_OPTION } from '../../../constants/common';
 import { useTheme } from '../../contexts/theme-context';
 import { PhilosoPhyApi } from '../../../service/PhilosophyApi';
 import CustomButton from '@/page/components/common/custom-button';
@@ -74,7 +73,7 @@ const PhilosophyManager: React.FC = () => {
     setModalVisible(false);
   }, [form]);
 
-  const columns: Array<ProColumns<PhilosophyDto>> = [
+  const columns: Array<TableColumnProps<PhilosophyDto>> = [
     {
       title: 'Content',
       dataIndex: 'content',
@@ -82,11 +81,11 @@ const PhilosophyManager: React.FC = () => {
     {
       title: 'Author',
       dataIndex: 'author',
-      align: "center",
+      align: 'center',
     },
     {
       title: 'Action',
-      align: "center",
+      align: 'center',
       render: (_v, record: PhilosophyDto) => (
         <Space>
           <CustomButton
@@ -146,12 +145,19 @@ const PhilosophyManager: React.FC = () => {
           ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}
         `}
       >
-        <ProTable
+        <Table
           dataSource={philosophies}
           rowKey="id"
           columns={columns}
-          pagination={false}
-          className={theme === 'dark' ? 'dark-table' : ''}
+          className={theme === 'dark' ? 'dark-table' : 'light-table'}
+          pagination={{
+            defaultPageSize: DEFAULT_PAGE_SIZE,
+            showSizeChanger: true,
+            pageSizeOptions: PAGE_SIZE_OPTION,
+            showTotal: (total, range) => (
+              <div>{`${range[0]}-${range[1]} / Total record : ${total}`}</div>
+            ),
+          }}
         />
       </Card>
 
@@ -178,27 +184,27 @@ const PhilosophyManager: React.FC = () => {
             <CustomButton
               variant="secondary"
               label={form.getFieldValue('id') ? 'Update' : 'Add'}
-              onClick={() => onSubmit}
+              onClick={() => onSubmit()}
               loading={loading}
             />
           </Space>,
         ]}
       >
-        <Form form={form} layout="vertical" className={theme === 'dark' ? 'dark-form' : 'light-form'}>
+        <Form
+          form={form}
+          layout="vertical"
+          className={theme === 'dark' ? 'dark-form' : 'light-form'}
+        >
           <Form.Item hidden name="id" />
           <Form.Item
             label="Content"
             name="content"
             rules={[{ required: true, message: 'Please enter content!' }]}
           >
-            <Input
-              placeholder="Enter content" 
-            />
+            <Input placeholder="Enter content" />
           </Form.Item>
           <Form.Item label="Author" name="author">
-            <Input
-              placeholder="Enter author"
-            />
+            <Input placeholder="Enter author" />
           </Form.Item>
         </Form>
       </Modal>
