@@ -17,7 +17,7 @@ export const AuthApi: IAuthApi = {
   },
 
   async loginWithGoogle() {
-    const res = await axios.get<{ statusCode: number; data: ResUserDto }>(
+    const res = await axios.post<{ statusCode: number; data: ResUserDto }>(
       `${BASE_URL_AUTH}/google`
     );
     return res.data;

@@ -31,12 +31,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   };
 
   const handleLoginWithGoogle = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      loginWithGoogle();
-      onClose();
-    }, 1000);
+    window.location.href = "https://blog-backend-production-4962.up.railway.app.blog/oauth2/authorization/google";
   }
 
   const handleRegister = async(request: UserDto) => {
