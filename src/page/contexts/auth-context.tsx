@@ -7,6 +7,7 @@ type AuthContextType = {
   user?: UserDto;
   token?: string;
   login: (request: UserDto) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 };
@@ -24,28 +25,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
     }
   }, []);
 
-  // Đăng nhập
+  // Đăng nhập bằng email & password
   const login = async (request: UserDto) => {
     try {
-      const response = await AuthApi.login({email: request.email, password: request.password});
-
+      const response = await AuthApi.login({ email: request.email, password: request.password });
       const { user: newUser, token: newToken } = response.data;
 
       setUser(newUser);
       setToken(newToken);
 
-      // Lưu vào localStorage để giữ đăng nhập khi reload
       localStorage.setItem('token', newToken);
       localStorage.setItem('user', JSON.stringify(newUser));
 
-      // Option: Cấu hình token cho axios
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-
     } catch (error) {
       console.error('Đăng nhập thất bại:', error);
+    }
+  };
+
+  // Đăng nhập bằng Google OAuth2
+  const loginWithGoogle = async () => {
+    try {
+      const response = await AuthApi.loginWithGoogle();
+      const { user: newUser, token: newToken } = response.data;
+
+      setUser(newUser);
+      setToken(newToken);
+
+      localStorage.setItem('token', newToken);
+      localStorage.setItem('user', JSON.stringify(newUser));
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+    } catch (error) {
+      console.error('Đăng nhập bằng Google thất bại:', error);
     }
   };
 
@@ -57,14 +73,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
-    // Xóa token khỏi header axios
     delete axios.defaults.headers.common['Authorization'];
   };
 
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, token, login, loginWithGoogle, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

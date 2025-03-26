@@ -4,6 +4,7 @@ import axios from './axiosInstance';
 
 interface IAuthApi {
   login(request: UserDto): Promise<{ statusCode: number; data: ResUserDto }>;
+  loginWithGoogle(): Promise<{ statusCode: number; data: ResUserDto }>;
 }
 
 export const AuthApi: IAuthApi = {
@@ -11,6 +12,13 @@ export const AuthApi: IAuthApi = {
     const res = await axios.post<{ statusCode: number; data: ResUserDto }>(
       `${BASE_URL_AUTH}/login`,
       request
+    );
+    return res.data;
+  },
+
+  async loginWithGoogle() {
+    const res = await axios.get<{ statusCode: number; data: ResUserDto }>(
+      `${BASE_URL_AUTH}/google`
     );
     return res.data;
   },

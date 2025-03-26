@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Tabs, Form, Input, message } from 'antd';
+import { Modal, Tabs, Form, Input, message, Space } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { UserDto } from '../../types/User';
@@ -18,7 +18,7 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [form] = useForm<UserDto>();
-  const { login } = useAuth(); 
+  const { login, loginWithGoogle } = useAuth(); 
 
   const handleLogin = (request: UserDto) => {
     setLoading(true);
@@ -29,6 +29,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
       onClose();
     }, 1000);
   };
+
+  const handleLoginWithGoogle = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      loginWithGoogle();
+      onClose();
+    }, 1000);
+  }
 
   const handleRegister = async(request: UserDto) => {
     try {
@@ -80,9 +89,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
             >
               <Input.Password prefix={<LockOutlined />} placeholder="Enter password" />
             </Form.Item>
-            <Form.Item>
-              <CustomButton variant="primary" label="Login" type="submit" loading={loading}/>
-            </Form.Item>
+            <Space>
+              <Form.Item>
+                <CustomButton variant="primary" label="Login" type="submit" loading={loading}/>
+              </Form.Item>
+              <Form.Item>
+                <CustomButton variant="primary" label="Login with google" loading={loading} onClick={() => handleLoginWithGoogle()}/>
+              </Form.Item>
+            </Space> 
           </Form>
         </TabPane>
 
