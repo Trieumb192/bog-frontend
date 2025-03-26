@@ -18,7 +18,7 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [form] = useForm<UserDto>();
-  const { login, loginWithGoogle } = useAuth(); 
+  const { login } = useAuth(); 
 
   const handleLogin = (request: UserDto) => {
     setLoading(true);
