@@ -7,6 +7,7 @@ import { UserApi } from '../../service/UserApi';
 import { HTTP_OK } from '../../constants/common';
 import { useAuth } from '../contexts/auth-context';
 import CustomButton from './common/custom-button';
+import { OAUTH2_URL } from '@/constants/baseUrl';
 
 const { TabPane } = Tabs;
 
@@ -31,7 +32,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   };
 
   const handleLoginWithGoogle = () => {
-    window.location.href = "https://blog-backend-production-4962.up.railway.app.blog/oauth2/authorization/google";
+    window.location.href = OAUTH2_URL;
   }
 
   const handleRegister = async(request: UserDto) => {
