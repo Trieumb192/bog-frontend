@@ -19,7 +19,7 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [form] = useForm<UserLoginRqDto>();
-  const { login } = useAuth(); 
+  const { login } = useAuth();
 
   const handleLogin = (request: UserLoginRqDto) => {
     setLoading(true);
@@ -31,11 +31,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   };
 
   const handleSuccess = async (response: CredentialResponse) => {
-    const googleToken = response.credential; 
-    handleLogin({googleToken: googleToken, isGoogleLogin: true});
+    const googleToken = response.credential;
+    handleLogin({ googleToken: googleToken, isGoogleLogin: true });
   };
 
-  const handleRegister = async(request: UserDto) => {
+  const handleRegister = async (request: UserDto) => {
     try {
       setLoading(true);
       const result = await UserApi.create(request);
@@ -49,8 +49,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
       message.error('Có lỗi xảy ra. Vui lòng thử lại!');
     } finally {
       setLoading(false);
-    };
-  }
+    }
+  };
 
   return (
     <Modal
@@ -59,7 +59,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
       footer={null}
       centered
       destroyOnClose
-      className="rounded-lg overflow-hidden"
+      className="rounded-lg overflow-hidden items-center"
     >
       <Tabs defaultActiveKey="1" centered>
         {/* Login Tab */}
@@ -85,28 +85,23 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
             >
               <Input.Password prefix={<LockOutlined />} placeholder="Enter password" />
             </Form.Item>
-            <Space>
+            <Space className="w-full justify-end">
               <Form.Item>
-                <CustomButton variant="primary" label="Login" type="submit" loading={loading}/>
+                <CustomButton variant="primary" label="Login" type="submit" loading={loading} />
               </Form.Item>
               <Form.Item>
-              <GoogleLogin
-                onSuccess={handleSuccess}
-                onError={() => message.error('Login with google failed!')}
-              />
+                <GoogleLogin
+                  onSuccess={handleSuccess}
+                  onError={() => message.error('Login with google failed!')}
+                />
               </Form.Item>
-            </Space> 
+            </Space>
           </Form>
         </TabPane>
 
         {/* Register Tab */}
         <TabPane tab="REGISTER" key="2">
-          <Form
-            name="register"
-            onFinish={handleRegister}
-            layout="vertical"
-            className="space-y-4"
-          >
+          <Form name="register" onFinish={handleRegister} layout="vertical" className="space-y-4">
             <Form.Item
               name="email"
               label="Email"
@@ -123,14 +118,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
             </Form.Item>
             <Form.Item
               name="fullName"
-              label="FulName"
+              label="FullName"
               rules={[{ required: true, message: 'Please enter fullname!' }]}
             >
-              <Input prefix={<UserOutlined />} placeholder="Fullname" />
+              <Input prefix={<UserOutlined />} placeholder="Full name" />
             </Form.Item>
-            <Form.Item>
-              <CustomButton variant="primary" label="Register" type="submit" loading={loading}/>
-            </Form.Item>
+            <Space className="w-full justify-end">
+              <Form.Item>
+                <CustomButton variant="primary" label="Register" type="submit" loading={loading} />
+              </Form.Item>
+            </Space>
           </Form>
         </TabPane>
       </Tabs>
