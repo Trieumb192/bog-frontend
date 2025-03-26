@@ -1,10 +1,9 @@
 import { BASE_URL_AUTH } from '../constants/baseUrl';
-import { ResUserDto, UserDto } from '../types/User';
+import { ResUserDto, UserDto, UserLoginRqDto } from '../types/User';
 import axios from './axiosInstance';
 
 interface IAuthApi {
-  login(request: UserDto): Promise<{ statusCode: number; data: ResUserDto }>;
-  loginWithGoogle(): Promise<{ statusCode: number; data: ResUserDto }>;
+  login(request: UserLoginRqDto): Promise<{ statusCode: number; data: ResUserDto }>;
 }
 
 export const AuthApi: IAuthApi = {
@@ -12,13 +11,6 @@ export const AuthApi: IAuthApi = {
     const res = await axios.post<{ statusCode: number; data: ResUserDto }>(
       `${BASE_URL_AUTH}/login`,
       request
-    );
-    return res.data;
-  },
-
-  async loginWithGoogle() {
-    const res = await axios.post<{ statusCode: number; data: ResUserDto }>(
-      `${BASE_URL_AUTH}/google`
     );
     return res.data;
   },

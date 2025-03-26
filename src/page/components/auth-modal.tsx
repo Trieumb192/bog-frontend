@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Modal, Tabs, Form, Input, message, Space } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
-import { UserDto } from '../../types/User';
+import { UserDto, UserLoginRqDto } from '../../types/User';
 import { UserApi } from '../../service/UserApi';
 import { HTTP_OK } from '../../constants/common';
 import { useAuth } from '../contexts/auth-context';
 import CustomButton from './common/custom-button';
-import { OAUTH2_URL } from '@/constants/baseUrl';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 
 const { TabPane } = Tabs;
 
@@ -18,22 +18,22 @@ interface AuthModalProps {
 
 const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
   const [loading, setLoading] = useState(false);
-  const [form] = useForm<UserDto>();
+  const [form] = useForm<UserLoginRqDto>();
   const { login } = useAuth(); 
 
-  const handleLogin = (request: UserDto) => {
+  const handleLogin = (request: UserLoginRqDto) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      message.success(`Wellcome ${request.fullName}!`);
       login(request);
       onClose();
     }, 1000);
   };
 
-  const handleLoginWithGoogle = () => {
-    window.location.href = OAUTH2_URL;
-  }
+  const handleSuccess = async (response: CredentialResponse) => {
+    const googleToken = response.credential; 
+    handleLogin({googleToken: googleToken, isGoogleLogin: true});
+  };
 
   const handleRegister = async(request: UserDto) => {
     try {
@@ -90,7 +90,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose }) => {
                 <CustomButton variant="primary" label="Login" type="submit" loading={loading}/>
               </Form.Item>
               <Form.Item>
-                <CustomButton variant="primary" label="Login with google" loading={loading} onClick={() => handleLoginWithGoogle()}/>
+              <GoogleLogin
+                onSuccess={handleSuccess}
+                onError={() => message.error('Login with google failed!')}
+              />
               </Form.Item>
             </Space> 
           </Form>

@@ -1,13 +1,13 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import axios from 'axios';
 import { AuthApi } from '../../service/LoginApi';
-import { UserDto } from '../../types/User';
+import { UserDto, UserLoginRqDto } from '../../types/User';
+import { message } from 'antd'; 
 
 type AuthContextType = {
   user?: UserDto;
   token?: string;
-  login: (request: UserDto) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
+  login: (request: UserLoginRqDto) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 };
@@ -25,14 +25,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
     }
   }, []);
 
-  // Đăng nhập bằng email & password
-  const login = async (request: UserDto) => {
+  // Cập nhật axios khi token thay đổi
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  }, [token]);
+
+  // login
+  const login = async (request: UserLoginRqDto) => {
     try {
-      const response = await AuthApi.login({ email: request.email, password: request.password });
+      const response = await AuthApi.login(request);
       const { user: newUser, token: newToken } = response.data;
 
       setUser(newUser);
@@ -41,31 +49,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem('token', newToken);
       localStorage.setItem('user', JSON.stringify(newUser));
 
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      message.success('Đăng nhập thành công!');
     } catch (error) {
       console.error('Đăng nhập thất bại:', error);
+      message.error('Đăng nhập thất bại. Vui lòng kiểm tra lại!');
     }
   };
 
-  // Đăng nhập bằng Google OAuth2
-  const loginWithGoogle = async () => {
-    try {
-      const response = await AuthApi.loginWithGoogle();
-      const { user: newUser, token: newToken } = response.data;
-
-      setUser(newUser);
-      setToken(newToken);
-
-      localStorage.setItem('token', newToken);
-      localStorage.setItem('user', JSON.stringify(newUser));
-
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-    } catch (error) {
-      console.error('Đăng nhập bằng Google thất bại:', error);
-    }
-  };
-
-  // Đăng xuất
+  // logout
   const logout = () => {
     setUser(undefined);
     setToken(undefined);
@@ -73,13 +64,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
-    delete axios.defaults.headers.common['Authorization'];
+    message.success('Bạn đã đăng xuất!');
   };
 
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, loginWithGoogle, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
@@ -88,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth phải dùng trong AuthProvider');
+    throw new Error('useAuth phải được dùng trong AuthProvider');
   }
   return context;
 };
