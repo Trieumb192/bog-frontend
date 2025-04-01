@@ -17,3 +17,11 @@ export interface PhilosophyDto {
   content: string;
   author: string;
 }
+
+export interface BlogDto {
+  id: number;
+  content: string;
+  title: string;
+}
+
+
