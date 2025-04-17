@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export interface ImageDto {
   id: number;
   url: string;
@@ -22,6 +24,8 @@ export interface BlogDto {
   id: number;
   content: string;
   title: string;
+  createdAt: moment.Moment;
+  updatedBy: string;
 }
 
 
