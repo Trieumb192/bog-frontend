@@ -61,18 +61,19 @@ const VlogPlaylist = () => {
             <ul className="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
               {filteredBlogs.map((blog) => (
                 <li
-                  key={blog.id}
-                  onClick={() => setSelectedBlog(blog)}
-                  className={`cursor-pointer p-3 rounded-lg border transition hover:bg-orange-100 dark:hover:bg-orange-300/20 ${
+                key={blog.id}
+                onClick={() => setSelectedBlog(blog)}
+                className={`cursor-pointer p-3 rounded-md border transition-colors duration-200
+                  ${
                     selectedBlog?.id === blog.id
-                      ? 'bg-orange-200 dark:bg-orange-400/20 font-semibold'
+                      ? 'bg-orange-500 text-white dark:bg-orange-400 dark:text-gray-900 font-semibold border-transparent'
                       : darkMode
-                        ? 'border-gray-600'
-                        : 'border-gray-300'
+                        ? 'border-gray-700 hover:bg-gray-700 hover:text-white'
+                        : 'border-gray-300 hover:bg-gray-100'
                   }`}
-                >
-                  {blog.title}
-                </li>
+              >
+                {blog.title}
+              </li>
               ))}
               {filteredBlogs.length === 0 && (
                 <li className="italic opacity-70">Không tìm thấy bài viết nào.</li>
